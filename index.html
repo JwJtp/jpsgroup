@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JPS Group – Real Estate Consultants</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --gold-dark: #8B6914;
+    --navy: #0D1B2A;
+    --navy-mid: #162436;
+    --navy-light: #1E3350;
+    --white: #FFFFFF;
+    --cream: #F9F5EC;
+    --text-muted: #94A3B8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* HERO NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.2rem 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(13,27,42,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .nav-logo-circle {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700; font-size: 14px; color: var(--navy);
+    letter-spacing: 1px;
+  }
+  .nav-logo-text { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold); }
+  .nav-logo-sub { font-size: 0.68rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: var(--navy); border: none; padding: 0.6rem 1.5rem;
+    font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.8rem;
+    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+    border-radius: 3px; transition: opacity 0.3s;
+    text-decoration: none; display: inline-block;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+                linear-gradient(135deg, #0D1B2A 0%, #162436 50%, #0D1B2A 100%);
+    display: flex; align-items: center;
+    padding: 7rem 5% 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(201,168,76,0.03) 60px, rgba(201,168,76,0.03) 61px),
+                      repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(201,168,76,0.03) 60px, rgba(201,168,76,0.03) 61px);
+    pointer-events: none;
+  }
+  .hero-content { max-width: 620px; animation: fadeUp 1s ease both; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold); padding: 0.4rem 1rem; border-radius: 20px;
+    font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero-badge::before { content: '◆'; font-size: 0.5rem; }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 900; line-height: 1.05;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero p {
+    font-size: 1.05rem; color: var(--text-muted); line-height: 1.7;
+    margin-bottom: 2.5rem; font-weight: 300;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: var(--navy); padding: 0.9rem 2rem;
+    font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.88rem;
+    letter-spacing: 1.5px; text-transform: uppercase; border: none;
+    cursor: pointer; border-radius: 3px; text-decoration: none;
+    display: inline-block; transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,168,76,0.4); }
+  .btn-outline {
+    border: 1px solid rgba(201,168,76,0.5); color: var(--gold);
+    padding: 0.9rem 2rem; background: transparent;
+    font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.88rem;
+    letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer;
+    border-radius: 3px; text-decoration: none; display: inline-block;
+    transition: background 0.3s;
+  }
+  .btn-outline:hover { background: rgba(201,168,76,0.1); }
+  .hero-stats {
+    position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 1.5rem;
+    animation: fadeLeft 1s 0.3s ease both;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.2);
+    padding: 1.5rem 2rem; border-radius: 8px; text-align: center;
+    backdrop-filter: blur(10px); min-width: 160px;
+  }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--gold); line-height: 1; }
+  .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 0.4rem; }
+
+  /* SECTION COMMON */
+  section { padding: 6rem 5%; }
+  .section-label {
+    display: inline-block; color: var(--gold); font-size: 0.72rem;
+    letter-spacing: 3px; text-transform: uppercase; margin-bottom: 0.8rem;
+  }
+  .section-label::before { content: '— '; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 700; line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .section-sub { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; max-width: 500px; }
+  .divider {
+    width: 60px; height: 3px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin: 1.5rem 0;
+  }
+
+  /* PROPERTIES */
+  #properties { background: var(--navy-mid); }
+  .props-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem; }
+  .props-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+
+  .prop-card {
+    background: var(--navy-light);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 12px; overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+  .prop-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(201,168,76,0.5);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .prop-img {
+    height: 200px; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .prop-img-bg {
+    position: absolute; inset: 0;
+  }
+  .prop-badge {
+    position: absolute; top: 1rem; left: 1rem;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: var(--navy); padding: 0.3rem 0.8rem; border-radius: 3px;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    z-index: 2;
+  }
+  .prop-badge-jv {
+    background: rgba(13,27,42,0.85); color: var(--gold);
+    border: 1px solid var(--gold);
+  }
+  .prop-acres-display {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem; font-weight: 900;
+    opacity: 0.08; color: var(--gold); z-index: 1;
+    position: absolute;
+  }
+  .prop-icon-large {
+    font-size: 3.5rem; z-index: 2; position: relative;
+  }
+  .prop-body { padding: 1.5rem; }
+  .prop-location { font-size: 0.72rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .prop-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.8rem; line-height: 1.3; }
+  .prop-divider { height: 1px; background: rgba(201,168,76,0.15); margin: 1rem 0; }
+  .prop-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1rem; }
+  .prop-spec-item {}
+  .prop-spec-label { font-size: 0.68rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+  .prop-spec-val { font-size: 0.95rem; font-weight: 600; color: var(--white); margin-top: 0.15rem; }
+  .prop-spec-val.gold { color: var(--gold); }
+  .prop-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.2rem; }
+  .prop-tag {
+    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2);
+    color: var(--gold); padding: 0.2rem 0.6rem; border-radius: 3px;
+    font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase;
+  }
+  .prop-cta {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 1rem; border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  .prop-price { }
+  .prop-price-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+  .prop-price-val { font-size: 1.2rem; font-weight: 700; color: var(--gold); font-family: 'Playfair Display', serif; }
+  .prop-btn {
+    background: transparent; border: 1px solid rgba(201,168,76,0.4);
+    color: var(--gold); padding: 0.5rem 1.2rem;
+    font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase;
+    cursor: pointer; border-radius: 3px; font-family: 'Outfit', sans-serif;
+    font-weight: 600; transition: background 0.2s;
+  }
+  .prop-btn:hover { background: rgba(201,168,76,0.15); }
+
+  /* WHY JPS */
+  #why { background: var(--navy); }
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .why-card {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 8px; padding: 2rem 1.5rem;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .why-card:hover { border-color: rgba(201,168,76,0.4); background: rgba(201,168,76,0.05); }
+  .why-icon {
+    width: 48px; height: 48px;
+    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 1.2rem;
+  }
+  .why-title { font-weight: 600; font-size: 1rem; margin-bottom: 0.5rem; }
+  .why-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* LOCATIONS MAP STRIP */
+  #locations { background: var(--navy-mid); }
+  .loc-strip { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
+  .loc-pin {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2);
+    padding: 0.6rem 1.2rem; border-radius: 20px; font-size: 0.85rem;
+    transition: background 0.3s;
+  }
+  .loc-pin:hover { background: rgba(201,168,76,0.18); }
+  .loc-pin-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+
+  /* CTA STRIP */
+  .cta-strip {
+    background: linear-gradient(135deg, rgba(201,168,76,0.12), rgba(201,168,76,0.06));
+    border-top: 1px solid rgba(201,168,76,0.2);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 5rem 5%;
+    text-align: center;
+  }
+  .cta-strip h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem,3vw,3rem); font-weight: 700; margin-bottom: 1rem; }
+  .cta-strip p { color: var(--text-muted); margin-bottom: 2.5rem; font-size: 0.95rem; }
+  .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  /* CONTACT */
+  #contact { background: var(--navy); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .contact-form { background: rgba(255,255,255,0.03); border: 1px solid rgba(201,168,76,0.15); border-radius: 12px; padding: 2.5rem; }
+  .contact-form h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 1.5rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { margin-bottom: 1.2rem; }
+  label { display: block; font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.4rem; }
+  input, select, textarea {
+    width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(201,168,76,0.2);
+    color: var(--white); padding: 0.7rem 1rem; border-radius: 4px;
+    font-family: 'Outfit', sans-serif; font-size: 0.9rem;
+    transition: border-color 0.3s; outline: none;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--gold); }
+  select option { background: var(--navy); }
+  textarea { resize: vertical; min-height: 100px; }
+  .submit-btn {
+    width: 100%; background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: var(--navy); border: none; padding: 0.9rem;
+    font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.9rem;
+    letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-radius: 4px;
+    transition: opacity 0.3s; margin-top: 0.5rem;
+  }
+  .submit-btn:hover { opacity: 0.85; }
+  .contact-info { }
+  .contact-info h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 0.5rem; }
+  .contact-info p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 2rem; }
+  .contact-detail { display: flex; gap: 1rem; margin-bottom: 1.5rem; align-items: flex-start; }
+  .contact-icon {
+    width: 44px; height: 44px; border-radius: 8px; flex-shrink: 0;
+    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25);
+    display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+  }
+  .contact-detail-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; }
+  .contact-detail-val { font-weight: 500; font-size: 0.9rem; margin-top: 0.15rem; }
+
+  /* FOOTER */
+  footer {
+    background: #080F18;
+    padding: 3rem 5% 2rem;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-brand {}
+  .footer-brand-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gold); font-weight: 700; }
+  .footer-brand-tag { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 0.2rem; }
+  .footer-copy { font-size: 0.75rem; color: var(--text-muted); margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); text-align: center; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeLeft { from { opacity: 0; transform: translate(30px, -50%); } to { opacity: 1; transform: translate(0, -50%); } }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero-stats { display: none; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+
+  /* SCROLL ANIMATIONS */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* Gradient backgrounds for prop cards */
+  .bg-hosur { background: linear-gradient(135deg, #1a2744 0%, #0d1b2a 100%); }
+  .bg-jd { background: linear-gradient(135deg, #14253d 0%, #0a1628 100%); }
+  .bg-hebbagodi { background: linear-gradient(135deg, #142a1a 0%, #0a1a10 100%); }
+
+  /* Gold shimmer for hero */
+  .shimmer-line {
+    height: 2px; width: 120px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1.5rem 0;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+  @keyframes shimmer { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+  .nav-logo-circle{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff;
+}
+
+.nav-logo-circle img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+.nav-logo-circle{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:#fff; /* White background */
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.nav-logo-circle img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+   <div class="nav-logo-circle">
+    <img src="images/logo.jpeg" alt="JPS Logo">
+</div>
+    <div>
+      <div class="nav-logo-text">JPS Group</div>
+      <div class="nav-logo-sub">Real Estate Consultants</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#properties">Properties</a>
+    <a href="#why">Why Us</a>
+    <a href="#locations">Locations</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta">Get in Touch</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Premium Real Estate Opportunities</div>
+    <h1>Connecting <span>Land,</span><br>Investments &<br><span>Opportunities</span></h1>
+    <div class="shimmer-line"></div>
+    <p>JPS Group curates exclusive joint development opportunities for visionary builders and investors. Premium parcels, verified titles, and high-growth corridors — Bengaluru's most sought-after addresses.</p>
+    <div class="hero-btns">
+      <a href="#properties" class="btn-primary">View Properties</a>
+      <a href="#contact" class="btn-outline">Schedule a Call</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-card">
+      <div class="stat-num">37+</div>
+      <div class="stat-label">Acres Listed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Prime Locations</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">JV/JD</div>
+      <div class="stat-label">Expert Structuring</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROPERTIES -->
+<section id="properties">
+  <div class="reveal">
+    <div class="props-header">
+      <div>
+        <div class="section-label">Featured Listings</div>
+        <h2 class="section-title">Premium Land Parcels</h2>
+        <div class="divider"></div>
+      </div>
+      <a href="#contact" class="btn-outline">Enquire About All</a>
+    </div>
+
+    <div class="props-grid">
+
+      <!-- PROPERTY 1: Giddenahalli -->
+      <div class="prop-card reveal">
+        <div class="prop-img bg-hosur">
+          <div class="prop-acres-display">13</div>
+         <div class="prop-icon-large">
+    <img src="images/pro3.jpeg" alt="Property">
+</div>
+          <div class="prop-badge">Premium JV</div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-location">📍 Hosur Main Road · Giddenahalli Village</div>
+          <div class="prop-title">13.75 Acres — High-Rise Apartment JV</div>
+          <div class="prop-divider"></div>
+          <div class="prop-specs">
+            <div class="prop-spec-item">
+              <div class="prop-spec-label">Land Area</div>
+              <div class="prop-spec-val gold">13.75 Acres</div>
+            </div>
+            <div class="prop-spec-item">
+              <div class="prop-spec-label">Non-Refundable</div>
+              <div class="prop-spec-val gold">₹90 Crore</div>
+            </div>
+            <div class="prop-spec-item">
+              <div class="prop-spec-label">JV Ratio</div>
+              <div class="prop-spec-val">47% / 53%</div>
+            </div>
+            <div class="prop-spec-item">
+              <div class="prop-spec-label">Launch Price</div>
+              <div class="prop-spec-val">₹15,000/sqft</div>
+            </div>
+            <div class="prop-spec-item">
+              <div class="prop-spec-label">Max Floors</div>
+              <div class="prop-spec-val">Up to 50</div>
+            </div>
+            <div class="prop-spec-item">
+              <div class="prop-spec-label">Completion</div>
+              <div class="prop-spec-val">4 Years</div>
+            </div>
+          </div>
+          <div class="prop-tags">
+            <span class="prop-tag">Premium FAR Loading</span>
+            <span class="prop-tag">High-Rise</span>
+            <span class="prop-tag">Villa Option</span>
+            <span class="prop-tag">High Growth</span>
+          </div>
+          <div class="prop-cta">
+            <div class="prop-price">
+              <div class="prop-price-label">Non-Refundable Advance</div>
+              <div class="prop-price-val">₹90 Cr</div>
+            </div>
+            <button class="prop-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Enquire →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROPERTY 2: 6 Acres JD -->
+      <div class="prop-card reveal">
+        <div class="prop-img bg-jd">
+          <div class="prop-acres-display">6</div>
+                <div class="prop-icon-large">
+    <img src="images/pro2.jpeg" alt="Property">
+</div>
+          <div class="prop-badge">No Advance</div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-location">📍 Prime Location · Excellent Potential</div>
+          <div class="prop-title">6 Acres — Apartment Joint Development</div>
+          <div class="prop-divider"></div>
+          <div class="prop-specs">
+            <div class="prop-spec-item">
+              <div class="prop-spec-label">Land Area</div>
+              <div class="prop-spec-val gold">6 Acres</div>
+            </div>
+            <div class="prop-spec-item">
+              <div class="prop-spec-label">Rate</div>
+              <div class="prop-spec-val gold">₹5 Cr/Acre</div>
+            </div>
+            <div class="prop-spec-item">
+              <div class="prop-spec-label">JD Ratio</div>
+              <div class="prop-spec-val">42% / 58%</div>
+            </div>
+            <div class="prop-spec-item">
+              <div class="prop-spec-label">Out Rate</div>
+              <div class="prop-spec-val">10 Acres</div>
+            </div>
+            <div class="prop-spec-item">
+              <div class="prop-spec-label">Goodwill</div>
+              <div class="prop-spec-val">₹60 Lakhs</div>
+            </div>
+            <div class="prop-spec-item">
+              <div class="prop-spec-label">Advance</div>
+              <div class="prop-spec-val" style="color:#4ade80">None Required</div>
+            </div>
+          </div>
+          <div class="prop-tags">
+            <span class="prop-tag">Clear Title</span>
+            <span class="prop-tag">No Advance</span>
+            <span class="prop-tag">Excellent ROI</span>
+            <span class="prop-tag">Premium JD</span>
+          </div>
+          <div class="prop-cta">
+            <div class="prop-price">
+              <div class="prop-price-label">Goodwill Only</div>
+              <div class="prop-price-val">₹60 Lakhs</div>
+            </div>
+            <button class="prop-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Enquire →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROPERTY 3: Hebbagodi -->
+      <div class="prop-card reveal">
+        <div class="prop-img bg-hebbagodi">
+          <div class="prop-acres-display">18</div>
+                 <div class="prop-icon-large">
+    <img src="images/pro1.jpeg" alt="Property">
+</div>
+          <div class="prop-badge prop-badge-jv">Yellow Zone</div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-location">📍 Hebbagodi · Near Electronic City</div>
+          <div class="prop-title">18 Acres — JD Apartment & Villa, Yellow Zone</div>
+          <div class="prop-divider"></div>
+          <div class="prop-specs">
+            <div class="prop-spec-item">
+              <div class="prop-spec-label">Land Area</div>
+              <div class="prop-spec-val gold">18 Acres</div>
+            </div>
+            <div class="prop-spec-item">
+              <div class="prop-spec-label">Advance & Goodwill</div>
+              <div class="prop-spec-val gold">₹95 Crore</div>
+            </div>
+            <div class="prop-spec-item">
+              <div class="prop-spec-label">JD Ratio</div>
+              <div class="prop-spec-val">60% / 40%</div>
+            </div>
+            <div class="prop-spec-item">
+              <div class="prop-spec-label">IT Hub Distance</div>
+              <div class="prop-spec-val">10 Minutes</div>
+            </div>
+            <div class="prop-spec-item">
+              <div class="prop-spec-label">Road Access</div>
+              <div class="prop-spec-val">40ft + 40ft</div>
+            </div>
+            <div class="prop-spec-item">
+              <div class="prop-spec-label">Litigation</div>
+              <div class="prop-spec-val" style="color:#4ade80">None</div>
+            </div>
+          </div>
+          <div class="prop-tags">
+            <span class="prop-tag">Yellow Zone</span>
+            <span class="prop-tag">No Litigation</span>
+            <span class="prop-tag">Clear Title</span>
+            <span class="prop-tag">Near E-City</span>
+            <span class="prop-tag">Villa + Apt</span>
+          </div>
+          <div class="prop-cta">
+            <div class="prop-price">
+              <div class="prop-price-label">Advance & Goodwill</div>
+              <div class="prop-price-val">₹95 Cr</div>
+            </div>
+            <button class="prop-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Enquire →</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<style>
+    .prop-icon-large {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 220px;
+}
+
+.prop-icon-large img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+}
+</style>
+
+<!-- WHY JPS -->
+<section id="why">
+  <div class="reveal">
+    <div class="section-label">Our Edge</div>
+    <h2 class="section-title">Why Developers Choose<br>JPS Group</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-icon">🔍</div>
+      <div class="why-title">Verified Clear Titles</div>
+      <div class="why-text">Every land parcel we represent undergoes rigorous title verification. Zero litigation. Clean documentation.</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">📍</div>
+      <div class="why-title">Strategic Locations</div>
+      <div class="why-text">Only high-growth corridors — Hosur Road, Electronic City, established IT hubs with excellent connectivity.</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">🤝</div>
+      <div class="why-title">JV & JD Expertise</div>
+      <div class="why-text">We structure Joint Ventures and Joint Developments with favourable ratios, protecting both builder and owner interests.</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">📈</div>
+      <div class="why-title">Maximum ROI Potential</div>
+      <div class="why-text">Premium FAR loading, launch price projections, and market intelligence to maximise your return on every development.</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">⚡</div>
+      <div class="why-title">Fast-Track Closures</div>
+      <div class="why-text">Streamlined deal structure, single-owner families, and ready documentation ensure faster closures and project launches.</div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">🏆</div>
+      <div class="why-title">Premium Pipeline</div>
+      <div class="why-text">Exclusive access to off-market parcels that never reach public listings — properties reserved for serious developers.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATIONS -->
+<section id="locations">
+  <div class="reveal">
+    <div class="section-label">Where We Operate</div>
+    <h2 class="section-title">Prime Bengaluru Corridors</h2>
+    <div class="divider"></div>
+    <p class="section-sub">Our listings are concentrated in Bengaluru's fastest-growing zones, near IT hubs, infrastructure projects, and premium residential catchments.</p>
+    <div class="loc-strip" style="margin-top:2.5rem">
+      <div class="loc-pin"><div class="loc-pin-dot"></div> Hosur Main Road</div>
+      <div class="loc-pin"><div class="loc-pin-dot"></div> Giddenahalli Village</div>
+      <div class="loc-pin"><div class="loc-pin-dot"></div> Hebbagodi</div>
+      <div class="loc-pin"><div class="loc-pin-dot"></div> Near Electronic City</div>
+      <div class="loc-pin"><div class="loc-pin-dot"></div> IT Hub Corridor</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<div class="cta-strip reveal">
+  <h2>A Rare Opportunity for<br><span style="color:var(--gold)">Visionary Developers</span></h2>
+  <p>Limited parcels. Verified titles. Strategic locations. Act before they're gone.</p>
+  <div class="cta-btns">
+    <a href="#contact" class="btn-primary">Schedule a Site Visit</a>
+    <a href="#properties" class="btn-outline">Browse Properties</a>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="reveal">
+      <div class="section-label">Get in Touch</div>
+      <h2 class="section-title">Let's Discuss<br>Your Investment</h2>
+      <div class="divider"></div>
+      <div class="contact-info">
+        <p>Whether you're a developer seeking a JV partner, an investor evaluating opportunities, or a builder looking for your next project — our team is ready to guide you.</p>
+        <div class="contact-detail">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-detail-label">Phone</div>
+            <div class="contact-detail-val">Contact us for details</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">📧</div>
+          <div>
+            <div class="contact-detail-label">Email</div>
+            <div class="contact-detail-val">info@jpsgroup.in</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-detail-label">Operating Area</div>
+            <div class="contact-detail-val">Bengaluru, Karnataka</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <h3>Send an Enquiry</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="Rajesh">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Kumar">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="+91 98765 43210">
+      </div>
+      <div class="form-group">
+        <label>Interested In</label>
+        <select>
+          <option>13.75 Acres — Hosur Main Road JV</option>
+          <option>6 Acres — Apartment JD</option>
+          <option>18 Acres — Hebbagodi Yellow Zone</option>
+          <option>All Properties</option>
+          <option>Off-Market Listings</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Brief details about your development capacity or investment interest..."></textarea>
+      </div>
+      <button class="submit-btn">Send Enquiry</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-brand-name">JPS Group</div>
+      <div class="footer-brand-tag">Real Estate Consultants · Bengaluru</div>
+    </div>
+    <div style="font-size:0.8rem;color:var(--text-muted);text-align:right">
+      Connecting Land, Investments & Opportunities<br>
+      <span style="color:var(--gold)">◆</span> Premium. Prime. Perfect.
+    </div>
+  </div>
+  <div class="footer-copy">© 2026 JPS Group Real Estate Consultants. All rights reserved. All figures are indicative and subject to verification.</div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
