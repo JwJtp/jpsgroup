@@ -4,389 +4,663 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JPS Group – Real Estate Consultants</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
-  :root {
-    --gold: #C9A84C;
-    --gold-light: #E8C96A;
-    --gold-dark: #8B6914;
-    --navy: #0D1B2A;
-    --navy-mid: #162436;
-    --navy-light: #1E3350;
-    --white: #FFFFFF;
-    --cream: #F9F5EC;
-    --text-muted: #94A3B8;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--navy);
-    color: var(--white);
-    font-family: 'Outfit', sans-serif;
-    overflow-x: hidden;
-  }
+:root {
+  --gold:       #C9A84C;
+  --gold-light: #E8C96A;
+  --gold-dark:  #8B6914;
+  --gold-glow:  rgba(201,168,76,0.25);
+  --navy:       #060D16;
+  --navy-mid:   #0B1623;
+  --navy-light: #112033;
+  --navy-card:  rgba(11,22,35,0.85);
+  --white:      #FFFFFF;
+  --cream:      #F9F5EC;
+  --muted:      #7A8FA6;
+  --accent-r:   #E87040;
+}
 
-  /* HERO NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    padding: 1.2rem 5%;
-    display: flex; align-items: center; justify-content: space-between;
-    background: rgba(13,27,42,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(201,168,76,0.2);
-  }
-  .nav-logo {
-    display: flex; align-items: center; gap: 12px;
-  }
-  .nav-logo-circle {
-    width: 44px; height: 44px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Playfair Display', serif;
-    font-weight: 700; font-size: 14px; color: var(--navy);
-    letter-spacing: 1px;
-  }
-  .nav-logo-text { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold); }
-  .nav-logo-sub { font-size: 0.68rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; }
-  .nav-links { display: flex; gap: 2rem; }
-  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; transition: color 0.3s; }
-  .nav-links a:hover { color: var(--gold); }
-  .nav-cta {
-    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
-    color: var(--navy); border: none; padding: 0.6rem 1.5rem;
-    font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.8rem;
-    letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
-    border-radius: 3px; transition: opacity 0.3s;
-    text-decoration: none; display: inline-block;
-  }
-  .nav-cta:hover { opacity: 0.85; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
 
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
-                linear-gradient(135deg, #0D1B2A 0%, #162436 50%, #0D1B2A 100%);
-    display: flex; align-items: center;
-    padding: 7rem 5% 4rem;
-    position: relative; overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    background-image: repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(201,168,76,0.03) 60px, rgba(201,168,76,0.03) 61px),
-                      repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(201,168,76,0.03) 60px, rgba(201,168,76,0.03) 61px);
-    pointer-events: none;
-  }
-  .hero-content { max-width: 620px; animation: fadeUp 1s ease both; }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3);
-    color: var(--gold); padding: 0.4rem 1rem; border-radius: 20px;
-    font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
-    margin-bottom: 1.5rem;
-  }
-  .hero-badge::before { content: '◆'; font-size: 0.5rem; }
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.8rem, 5vw, 4.5rem);
-    font-weight: 900; line-height: 1.05;
-    margin-bottom: 1.2rem;
-  }
-  .hero h1 span { color: var(--gold); }
-  .hero p {
-    font-size: 1.05rem; color: var(--text-muted); line-height: 1.7;
-    margin-bottom: 2.5rem; font-weight: 300;
-  }
-  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn-primary {
-    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
-    color: var(--navy); padding: 0.9rem 2rem;
-    font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.88rem;
-    letter-spacing: 1.5px; text-transform: uppercase; border: none;
-    cursor: pointer; border-radius: 3px; text-decoration: none;
-    display: inline-block; transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 4px 20px rgba(201,168,76,0.3);
-  }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,168,76,0.4); }
-  .btn-outline {
-    border: 1px solid rgba(201,168,76,0.5); color: var(--gold);
-    padding: 0.9rem 2rem; background: transparent;
-    font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.88rem;
-    letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer;
-    border-radius: 3px; text-decoration: none; display: inline-block;
-    transition: background 0.3s;
-  }
-  .btn-outline:hover { background: rgba(201,168,76,0.1); }
-  .hero-stats {
-    position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
-    display: flex; flex-direction: column; gap: 1.5rem;
-    animation: fadeLeft 1s 0.3s ease both;
-  }
-  .stat-card {
-    background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.2);
-    padding: 1.5rem 2rem; border-radius: 8px; text-align: center;
-    backdrop-filter: blur(10px); min-width: 160px;
-  }
-  .stat-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--gold); line-height: 1; }
-  .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 0.4rem; }
+body {
+  background: var(--navy);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
 
-  /* SECTION COMMON */
-  section { padding: 6rem 5%; }
-  .section-label {
-    display: inline-block; color: var(--gold); font-size: 0.72rem;
-    letter-spacing: 3px; text-transform: uppercase; margin-bottom: 0.8rem;
-  }
-  .section-label::before { content: '— '; }
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 700; line-height: 1.2;
-    margin-bottom: 1rem;
-  }
-  .section-sub { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; max-width: 500px; }
-  .divider {
-    width: 60px; height: 3px;
-    background: linear-gradient(90deg, var(--gold), transparent);
-    margin: 1.5rem 0;
-  }
+/* ═══════════════════════════
+   SCROLLBAR
+═══════════════════════════ */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--navy); }
+::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 2px; }
 
-  /* PROPERTIES */
-  #properties { background: var(--navy-mid); }
-  .props-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem; }
-  .props-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+/* ═══════════════════════════
+   PARTICLE CANVAS (BG)
+═══════════════════════════ */
+#bg-canvas {
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none; opacity: 0.55;
+}
 
-  .prop-card {
-    background: var(--navy-light);
-    border: 1px solid rgba(201,168,76,0.15);
-    border-radius: 12px; overflow: hidden;
-    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-    cursor: pointer;
-  }
-  .prop-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(201,168,76,0.5);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-  }
-  .prop-img {
-    height: 200px; position: relative; overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .prop-img-bg {
-    position: absolute; inset: 0;
-  }
-  .prop-badge {
-    position: absolute; top: 1rem; left: 1rem;
-    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
-    color: var(--navy); padding: 0.3rem 0.8rem; border-radius: 3px;
-    font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-    z-index: 2;
-  }
-  .prop-badge-jv {
-    background: rgba(13,27,42,0.85); color: var(--gold);
-    border: 1px solid var(--gold);
-  }
-  .prop-acres-display {
-    font-family: 'Playfair Display', serif;
-    font-size: 5rem; font-weight: 900;
-    opacity: 0.08; color: var(--gold); z-index: 1;
-    position: absolute;
-  }
-  .prop-icon-large {
-    font-size: 3.5rem; z-index: 2; position: relative;
-  }
-  .prop-body { padding: 1.5rem; }
-  .prop-location { font-size: 0.72rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem; }
-  .prop-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.8rem; line-height: 1.3; }
-  .prop-divider { height: 1px; background: rgba(201,168,76,0.15); margin: 1rem 0; }
-  .prop-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1rem; }
-  .prop-spec-item {}
-  .prop-spec-label { font-size: 0.68rem; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
-  .prop-spec-val { font-size: 0.95rem; font-weight: 600; color: var(--white); margin-top: 0.15rem; }
-  .prop-spec-val.gold { color: var(--gold); }
-  .prop-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.2rem; }
-  .prop-tag {
-    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2);
-    color: var(--gold); padding: 0.2rem 0.6rem; border-radius: 3px;
-    font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase;
-  }
-  .prop-cta {
-    display: flex; justify-content: space-between; align-items: center;
-    padding-top: 1rem; border-top: 1px solid rgba(201,168,76,0.1);
-  }
-  .prop-price { }
-  .prop-price-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-  .prop-price-val { font-size: 1.2rem; font-weight: 700; color: var(--gold); font-family: 'Playfair Display', serif; }
-  .prop-btn {
-    background: transparent; border: 1px solid rgba(201,168,76,0.4);
-    color: var(--gold); padding: 0.5rem 1.2rem;
-    font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase;
-    cursor: pointer; border-radius: 3px; font-family: 'Outfit', sans-serif;
-    font-weight: 600; transition: background 0.2s;
-  }
-  .prop-btn:hover { background: rgba(201,168,76,0.15); }
+/* ═══════════════════════════
+   NAV
+═══════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  padding: 1rem 5%;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(6,13,22,0.88);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(201,168,76,0.12);
+  transition: all 0.4s;
+}
+nav.scrolled {
+  padding: 0.7rem 5%;
+  background: rgba(6,13,22,0.97);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 12px;
+}
+.nav-logo-circle {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: #fff; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid rgba(201,168,76,0.4);
+}
+.nav-logo-circle img { width: 100%; height: 100%; object-fit: contain; }
+.nav-logo-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem; font-weight: 600; color: var(--gold);
+  letter-spacing: 1px;
+}
+.nav-logo-sub {
+  font-size: 0.6rem; color: var(--muted);
+  letter-spacing: 3px; text-transform: uppercase; margin-top: 1px;
+}
+.nav-links { display: flex; gap: 2.5rem; }
+.nav-links a {
+  color: var(--muted); text-decoration: none;
+  font-size: 0.78rem; letter-spacing: 1.5px; text-transform: uppercase;
+  transition: color 0.3s; position: relative; padding-bottom: 4px;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 0; height: 1px; background: var(--gold);
+  transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+  color: var(--navy); padding: 0.55rem 1.4rem;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+  border-radius: 2px; text-decoration: none; display: inline-block;
+  transition: opacity 0.3s, transform 0.3s;
+}
+.nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
 
-  /* WHY JPS */
-  #why { background: var(--navy); }
-  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
-  .why-card {
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(201,168,76,0.12);
-    border-radius: 8px; padding: 2rem 1.5rem;
-    transition: border-color 0.3s, background 0.3s;
-  }
-  .why-card:hover { border-color: rgba(201,168,76,0.4); background: rgba(201,168,76,0.05); }
-  .why-icon {
-    width: 48px; height: 48px;
-    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25);
-    border-radius: 8px; display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem; margin-bottom: 1.2rem;
-  }
-  .why-title { font-weight: 600; font-size: 1rem; margin-bottom: 0.5rem; }
-  .why-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+/* ═══════════════════════════
+   HERO
+═══════════════════════════ */
+.hero {
+  min-height: 100vh; position: relative; z-index: 1;
+  display: flex; align-items: center;
+  padding: 9rem 5% 5rem;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 70% at 80% 50%, rgba(201,168,76,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(232,112,64,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-left { flex: 1; max-width: 620px; position: relative; z-index: 2; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  color: var(--gold); font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+.hero-eyebrow-line { width: 40px; height: 1px; background: var(--gold); opacity: 0.6; }
 
-  /* LOCATIONS MAP STRIP */
-  #locations { background: var(--navy-mid); }
-  .loc-strip { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
-  .loc-pin {
-    display: flex; align-items: center; gap: 0.5rem;
-    background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2);
-    padding: 0.6rem 1.2rem; border-radius: 20px; font-size: 0.85rem;
-    transition: background 0.3s;
-  }
-  .loc-pin:hover { background: rgba(201,168,76,0.18); }
-  .loc-pin-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.2rem, 5.5vw, 5.5rem);
+  font-weight: 300; line-height: 1.0;
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px;
+}
+.hero h1 em {
+  font-style: italic; color: var(--gold);
+  font-weight: 400;
+}
+.hero h1 strong {
+  font-weight: 700; display: block;
+}
 
-  /* CTA STRIP */
-  .cta-strip {
-    background: linear-gradient(135deg, rgba(201,168,76,0.12), rgba(201,168,76,0.06));
-    border-top: 1px solid rgba(201,168,76,0.2);
-    border-bottom: 1px solid rgba(201,168,76,0.2);
-    padding: 5rem 5%;
-    text-align: center;
-  }
-  .cta-strip h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem,3vw,3rem); font-weight: 700; margin-bottom: 1rem; }
-  .cta-strip p { color: var(--text-muted); margin-bottom: 2.5rem; font-size: 0.95rem; }
-  .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.hero-desc {
+  font-size: 0.95rem; color: var(--muted); line-height: 1.8;
+  margin-bottom: 3rem; font-weight: 300; max-width: 480px;
+}
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+  color: var(--navy); padding: 0.9rem 2.2rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+  border: none; cursor: pointer; border-radius: 2px; text-decoration: none;
+  display: inline-block;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 6px 30px rgba(201,168,76,0.35);
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(201,168,76,0.5); }
+.btn-ghost {
+  border: 1px solid rgba(201,168,76,0.35); color: var(--gold);
+  padding: 0.9rem 2.2rem; background: transparent;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+  cursor: pointer; border-radius: 2px; text-decoration: none; display: inline-block;
+  transition: background 0.3s, border-color 0.3s;
+}
+.btn-ghost:hover { background: rgba(201,168,76,0.08); border-color: rgba(201,168,76,0.7); }
 
-  /* CONTACT */
-  #contact { background: var(--navy); }
-  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
-  .contact-form { background: rgba(255,255,255,0.03); border: 1px solid rgba(201,168,76,0.15); border-radius: 12px; padding: 2.5rem; }
-  .contact-form h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 1.5rem; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .form-group { margin-bottom: 1.2rem; }
-  label { display: block; font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.4rem; }
-  input, select, textarea {
-    width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(201,168,76,0.2);
-    color: var(--white); padding: 0.7rem 1rem; border-radius: 4px;
-    font-family: 'Outfit', sans-serif; font-size: 0.9rem;
-    transition: border-color 0.3s; outline: none;
-  }
-  input:focus, select:focus, textarea:focus { border-color: var(--gold); }
-  select option { background: var(--navy); }
-  textarea { resize: vertical; min-height: 100px; }
-  .submit-btn {
-    width: 100%; background: linear-gradient(135deg, var(--gold-dark), var(--gold));
-    color: var(--navy); border: none; padding: 0.9rem;
-    font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.9rem;
-    letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-radius: 4px;
-    transition: opacity 0.3s; margin-top: 0.5rem;
-  }
-  .submit-btn:hover { opacity: 0.85; }
-  .contact-info { }
-  .contact-info h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 0.5rem; }
-  .contact-info p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 2rem; }
-  .contact-detail { display: flex; gap: 1rem; margin-bottom: 1.5rem; align-items: flex-start; }
-  .contact-icon {
-    width: 44px; height: 44px; border-radius: 8px; flex-shrink: 0;
-    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25);
-    display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
-  }
-  .contact-detail-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; }
-  .contact-detail-val { font-weight: 500; font-size: 0.9rem; margin-top: 0.15rem; }
+.hero-right {
+  flex: 1; display: flex; justify-content: center; align-items: center;
+  position: relative; z-index: 2;
+  min-height: 400px;
+}
 
-  /* FOOTER */
-  footer {
-    background: #080F18;
-    padding: 3rem 5% 2rem;
-    border-top: 1px solid rgba(201,168,76,0.15);
-  }
-  .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
-  .footer-brand {}
-  .footer-brand-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gold); font-weight: 700; }
-  .footer-brand-tag { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 0.2rem; }
-  .footer-copy { font-size: 0.75rem; color: var(--text-muted); margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); text-align: center; }
+/* Hero 3D scene */
+#hero-canvas {
+  width: 500px; height: 450px;
+  position: relative; z-index: 2;
+}
 
-  /* ANIMATIONS */
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes fadeLeft { from { opacity: 0; transform: translate(30px, -50%); } to { opacity: 1; transform: translate(0, -50%); } }
+/* Hero floating stat pills */
+.hero-pill {
+  position: absolute; z-index: 10;
+  background: rgba(6,13,22,0.82); backdrop-filter: blur(16px);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 12px; padding: 1rem 1.4rem;
+  animation: float 6s ease-in-out infinite;
+}
+.hero-pill:nth-child(2) { animation-delay: -2s; top: 10%; right: 5%; }
+.hero-pill:nth-child(3) { animation-delay: -4s; bottom: 15%; right: 2%; }
+.hero-pill-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1;
+}
+.hero-pill-label {
+  font-size: 0.65rem; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 3px;
+}
 
-  /* RESPONSIVE */
-  @media (max-width: 768px) {
-    .hero-stats { display: none; }
-    .contact-grid { grid-template-columns: 1fr; }
-    .form-row { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
-  }
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
 
-  /* SCROLL ANIMATIONS */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .reveal.visible { opacity: 1; transform: none; }
+/* ═══════════════════════════
+   SECTION COMMONS
+═══════════════════════════ */
+.section-eyebrow {
+  font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold); display: flex; align-items: center; gap: 10px;
+  margin-bottom: 1rem;
+}
+.section-eyebrow::before { content: ''; width: 30px; height: 1px; background: var(--gold); opacity: 0.6; display: block; }
 
-  /* Gradient backgrounds for prop cards */
-  .bg-hosur { background: linear-gradient(135deg, #1a2744 0%, #0d1b2a 100%); }
-  .bg-jd { background: linear-gradient(135deg, #14253d 0%, #0a1628 100%); }
-  .bg-hebbagodi { background: linear-gradient(135deg, #142a1a 0%, #0a1a10 100%); }
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  font-weight: 300; line-height: 1.15;
+  margin-bottom: 1rem;
+}
+.section-title em { font-style: italic; color: var(--gold); }
 
-  /* Gold shimmer for hero */
-  .shimmer-line {
-    height: 2px; width: 120px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 1.5rem 0;
-    animation: shimmer 3s ease-in-out infinite;
-  }
-  @keyframes shimmer { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
-  .nav-logo-circle{
-    width:60px;
-    height:60px;
-    border-radius:50%;
-    overflow:hidden;
+.gold-rule {
+  width: 50px; height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin: 1.2rem 0 1.5rem;
+}
+
+/* ═══════════════════════════
+   PROPERTIES — 3D CARDS
+═══════════════════════════ */
+#properties {
+  padding: 7rem 5%;
+  background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 100%);
+  position: relative; z-index: 1;
+}
+#properties::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+}
+.props-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem;
+}
+.props-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 2rem;
+}
+
+/* 3D Tilt Card */
+.prop-card {
+  background: var(--navy-card);
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: 16px; overflow: hidden;
+  cursor: pointer; position: relative;
+  transform-style: preserve-3d;
+  transition: border-color 0.4s, box-shadow 0.4s;
+  will-change: transform;
+}
+.prop-card::after {
+  content: '';
+  position: absolute; inset: 0; border-radius: 16px;
+  background: linear-gradient(135deg, rgba(201,168,76,0.06) 0%, transparent 60%);
+  opacity: 0; transition: opacity 0.4s;
+  pointer-events: none;
+}
+.prop-card:hover {
+  border-color: rgba(201,168,76,0.5);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 40px rgba(201,168,76,0.12);
+}
+.prop-card:hover::after { opacity: 1; }
+
+/* 3D canvas inside each card */
+.prop-3d-scene {
+  width: 100%; height: 220px; position: relative;
+  background: linear-gradient(135deg, #070f1a 0%, #0d1e30 100%);
+  overflow: hidden;
+}
+.prop-3d-scene canvas {
+  width: 100% !important; height: 100% !important;
+  display: block;
+}
+.prop-badge {
+  position: absolute; top: 1rem; left: 1rem; z-index: 10;
+  background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+  color: var(--navy); padding: 0.28rem 0.8rem; border-radius: 2px;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+}
+.prop-badge.outline {
+  background: rgba(6,13,22,0.8);
+  color: var(--gold); border: 1px solid var(--gold);
+}
+.prop-3d-label {
+  position: absolute; bottom: 0.8rem; right: 0.8rem; z-index: 10;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 4rem; font-weight: 700;
+  color: rgba(201,168,76,0.07); line-height: 1;
+  pointer-events: none; user-select: none;
+}
+
+.prop-body { padding: 1.6rem; }
+.prop-location {
+  font-size: 0.68rem; color: var(--gold);
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem;
+  display: flex; align-items: center; gap: 6px;
+}
+.prop-location-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+.prop-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.45rem; font-weight: 600; line-height: 1.25;
+  margin-bottom: 1rem;
+}
+.prop-rule { height: 1px; background: rgba(201,168,76,0.1); margin: 1rem 0; }
+.prop-specs {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;
+  margin-bottom: 1rem;
+}
+.spec-label { font-size: 0.6rem; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; }
+.spec-val { font-size: 0.92rem; font-weight: 600; margin-top: 3px; }
+.spec-val.gold { color: var(--gold); }
+.spec-val.green { color: #4ade80; }
+
+.prop-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1.2rem; }
+.prop-tag {
+  background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.18);
+  color: rgba(201,168,76,0.8); padding: 0.18rem 0.55rem; border-radius: 2px;
+  font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase;
+}
+
+.prop-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 1rem; border-top: 1px solid rgba(201,168,76,0.08);
+}
+.prop-price-label { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.prop-price-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem; font-weight: 700; color: var(--gold); line-height: 1.1;
+}
+.prop-enquire {
+  background: transparent; border: 1px solid rgba(201,168,76,0.35); color: var(--gold);
+  padding: 0.5rem 1.2rem; font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+  cursor: pointer; border-radius: 2px; transition: all 0.25s;
+}
+.prop-enquire:hover {
+  background: rgba(201,168,76,0.12); border-color: var(--gold);
+  transform: translateX(3px);
+}
+
+/* ═══════════════════════════
+   WHY JPS
+═══════════════════════════ */
+#why {
+  padding: 7rem 5%;
+  background: var(--navy);
+  position: relative; z-index: 1;
+}
+.why-layout { display: grid; grid-template-columns: 1fr 1.6fr; gap: 5rem; align-items: center; }
+.why-left .section-desc { color: var(--muted); font-size: 0.92rem; line-height: 1.8; margin-top: 1rem; }
+.why-grid-r {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
+}
+.why-card {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(201,168,76,0.1);
+  border-radius: 10px; padding: 1.6rem;
+  transition: all 0.35s; position: relative; overflow: hidden;
+}
+.why-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0; transition: opacity 0.35s;
+}
+.why-card:hover {
+  border-color: rgba(201,168,76,0.3);
+  background: rgba(201,168,76,0.04);
+  transform: translateY(-3px);
+}
+.why-card:hover::before { opacity: 1; }
+.why-icon {
+  width: 42px; height: 42px; border-radius: 8px;
+  background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; margin-bottom: 1rem;
+}
+.why-card-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.4rem; }
+.why-card-text { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+
+/* ═══════════════════════════
+   LOCATIONS
+═══════════════════════════ */
+#locations {
+  padding: 7rem 5%;
+  background: var(--navy-mid);
+  position: relative; z-index: 1;
+}
+.loc-grid { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2.5rem; }
+.loc-chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.18);
+  padding: 0.6rem 1.3rem; border-radius: 30px; font-size: 0.82rem;
+  transition: all 0.3s; cursor: default;
+}
+.loc-chip:hover { background: rgba(201,168,76,0.15); border-color: rgba(201,168,76,0.45); }
+.loc-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: pulse-dot 2s ease-in-out infinite; }
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.5); }
+  50% { box-shadow: 0 0 0 6px rgba(201,168,76,0); }
+}
+
+/* ═══════════════════════════
+   CTA STRIP
+═══════════════════════════ */
+.cta-strip {
+  padding: 7rem 5%; text-align: center; position: relative; z-index: 1;
+  background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(201,168,76,0.07) 0%, transparent 70%),
+              var(--navy);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+}
+.cta-strip h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 3.5vw, 4rem);
+  font-weight: 300; line-height: 1.15; margin-bottom: 1rem;
+}
+.cta-strip h2 em { font-style: italic; color: var(--gold); }
+.cta-strip p { color: var(--muted); margin-bottom: 2.5rem; font-size: 0.92rem; }
+.cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* ═══════════════════════════
+   CONTACT
+═══════════════════════════ */
+#contact {
+  padding: 7rem 5%;
+  background: var(--navy-mid);
+  position: relative; z-index: 1;
+}
+.contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+.contact-form-wrap {
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(201,168,76,0.14);
+  border-radius: 16px; padding: 2.5rem;
+}
+.contact-form-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem; font-weight: 600; margin-bottom: 1.8rem;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group { margin-bottom: 1.2rem; }
+label {
+  display: block; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 0.4rem;
+}
+input, select, textarea {
+  width: 100%; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.15);
+  color: var(--white); padding: 0.75rem 1rem; border-radius: 4px;
+  font-family: 'Inter', sans-serif; font-size: 0.88rem;
+  outline: none; transition: border-color 0.3s, box-shadow 0.3s;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: rgba(201,168,76,0.6);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.08);
+}
+select option { background: var(--navy); }
+textarea { resize: vertical; min-height: 100px; }
+.submit-btn {
+  width: 100%; background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+  color: var(--navy); border: none; padding: 0.95rem;
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.85rem;
+  letter-spacing: 2px; text-transform: uppercase; cursor: pointer; border-radius: 4px;
+  transition: opacity 0.3s, transform 0.3s; margin-top: 0.5rem;
+}
+.submit-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+.contact-info-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.9rem; font-weight: 300; margin-bottom: 0.5rem; line-height: 1.2;
+}
+.contact-info-title em { font-style: italic; color: var(--gold); }
+.contact-info-desc { color: var(--muted); font-size: 0.88rem; line-height: 1.8; margin-bottom: 2.5rem; }
+.contact-detail { display: flex; gap: 1rem; margin-bottom: 1.5rem; align-items: flex-start; }
+.contact-icon {
+  width: 44px; height: 44px; border-radius: 8px; flex-shrink: 0;
+  background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+}
+.detail-label { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; }
+.detail-val { font-weight: 500; font-size: 0.9rem; margin-top: 3px; }
+
+/* ═══════════════════════════
+   FOOTER
+═══════════════════════════ */
+footer {
+  background: #030810;
+  padding: 3rem 5% 2rem;
+  border-top: 1px solid rgba(201,168,76,0.12);
+  position: relative; z-index: 1;
+}
+.footer-inner {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1.5rem;
+}
+.footer-brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem; color: var(--gold); font-weight: 600;
+}
+.footer-brand-tag { font-size: 0.65rem; color: var(--muted); letter-spacing: 2px; margin-top: 3px; text-transform: uppercase; }
+.footer-copy {
+  font-size: 0.7rem; color: var(--muted); margin-top: 2rem; padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.05); text-align: center;
+}
+
+/* ═══════════════════════════
+   REVEAL ANIMATION
+═══════════════════════════ */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ═══════════════════════════
+   RESPONSIVE
+═══════════════════════════ */
+@media (max-width: 900px) {
+  .hero { flex-direction: column; gap: 3rem; padding-top: 8rem; }
+  .hero-right { display: none; }
+  .why-layout { grid-template-columns: 1fr; }
+  .contact-layout { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+}
+@media (max-width: 600px) {
+  .props-grid { grid-template-columns: 1fr; }
+  .prop-specs { grid-template-columns: 1fr 1fr; }
+  .why-grid-r { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════
+   LOADING SCREEN
+═══════════════════════════ */
+#loader {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--navy);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1.5rem;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+#loader.hidden { opacity: 0; visibility: hidden; }
+.loader-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem; color: var(--gold); font-weight: 300;
+  letter-spacing: 4px;
+}
+.loader-bar-wrap {
+  width: 200px; height: 2px;
+  background: rgba(201,168,76,0.15); border-radius: 1px;
+  overflow: hidden;
+}
+.loader-bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+  border-radius: 1px;
+  animation: loadBar 1.5s ease-in-out forwards;
+}
+@keyframes loadBar { to { width: 100%; } }
+#loader{
+    position:fixed;
+    inset:0;
+    background:#020b18;
     display:flex;
-    align-items:center;
+    flex-direction:column;
     justify-content:center;
-    background:#fff;
+    align-items:center;
+    z-index:99999;
 }
 
-.nav-logo-circle img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-}
-.nav-logo-circle{
-    width:60px;
-    height:60px;
-    border-radius:50%;
-    background:#fff; /* White background */
-    overflow:hidden;
+.loader-content{
     display:flex;
+    flex-direction:column;
     align-items:center;
-    justify-content:center;
+    gap:15px;
 }
 
-.nav-logo-circle img{
-    width:100%;
-    height:100%;
+.loader-logo{
+    width:90px;
+    height:90px;
     object-fit:contain;
+    animation:logoGlow 2s ease-in-out infinite;
+}
+
+.loader-brand{
+    color:#d4af37;
+    font-size:32px;
+    font-weight:600;
+    letter-spacing:3px;
+}
+
+.loader-bar-wrap{
+    width:250px;
+    height:4px;
+    background:rgba(255,255,255,.1);
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:25px;
+}
+
+.loader-bar{
+    width:0;
+    height:100%;
+    background:#d4af37;
+    animation:loading 2.5s forwards;
+}
+
+@keyframes loading{
+    from{width:0;}
+    to{width:100%;}
+}
+
+@keyframes logoGlow{
+    0%,100%{
+        transform:scale(1);
+        filter:drop-shadow(0 0 8px #d4af37);
+    }
+    50%{
+        transform:scale(1.08);
+        filter:drop-shadow(0 0 20px #d4af37);
+    }
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">
-   <div class="nav-logo-circle">
-    <img src="images/logo.jpeg" alt="JPS Logo">
+<!-- LOADER -->
+<div id="loader">
+    <div class="loader-content">
+        <img src="images/logo.jpeg" alt="JPS Group Logo" class="loader-logo">
+        <div class="loader-brand">JPS Group</div>
+    </div>
+
+    <div class="loader-bar-wrap">
+        <div class="loader-bar"></div>
+    </div>
 </div>
+
+<!-- BG PARTICLE CANVAS -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-logo">
+    <div class="nav-logo-circle">
+      <img src="images/logo.jpeg" alt="JPS Logo" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-family:Cormorant Garamond,serif;font-weight:700;color:#C9A84C;font-size:1rem;\'>JPS</span>'">
+    </div>
     <div>
       <div class="nav-logo-text">JPS Group</div>
       <div class="nav-logo-sub">Real Estate Consultants</div>
@@ -403,267 +677,254 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-content">
-    <div class="hero-badge">Premium Real Estate Opportunities</div>
-    <h1>Connecting <span>Land,</span><br>Investments &<br><span>Opportunities</span></h1>
-    <div class="shimmer-line"></div>
-    <p>JPS Group curates exclusive joint development opportunities for visionary builders and investors. Premium parcels, verified titles, and high-growth corridors — Bengaluru's most sought-after addresses.</p>
+  <div class="hero-left reveal">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-line"></span>
+      Premium Real Estate Opportunities
+    </div>
+    <h1>
+      Connecting <em>Land,</em><br>
+      <strong>Investments &<br>Opportunities</strong>
+    </h1>
+    <p class="hero-desc">
+      JPS Group curates exclusive joint development opportunities for visionary builders and investors. Premium parcels, verified titles, high-growth corridors — Bengaluru's most sought-after addresses.
+    </p>
     <div class="hero-btns">
       <a href="#properties" class="btn-primary">View Properties</a>
-      <a href="#contact" class="btn-outline">Schedule a Call</a>
+      <a href="#contact" class="btn-ghost">Schedule a Call</a>
     </div>
   </div>
-  <div class="hero-stats">
-    <div class="stat-card">
-      <div class="stat-num">37+</div>
-      <div class="stat-label">Acres Listed</div>
+  <div class="hero-right">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-pill" style="top:8%;left:0">
+      <div class="hero-pill-num">37+</div>
+      <div class="hero-pill-label">Acres Listed</div>
     </div>
-    <div class="stat-card">
-      <div class="stat-num">3</div>
-      <div class="stat-label">Prime Locations</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">JV/JD</div>
-      <div class="stat-label">Expert Structuring</div>
+    <div class="hero-pill" style="bottom:12%;left:0">
+      <div class="hero-pill-num">3</div>
+      <div class="hero-pill-label">Prime Corridors</div>
     </div>
   </div>
 </section>
 
 <!-- PROPERTIES -->
 <section id="properties">
-  <div class="reveal">
-    <div class="props-header">
-      <div>
-        <div class="section-label">Featured Listings</div>
-        <h2 class="section-title">Premium Land Parcels</h2>
-        <div class="divider"></div>
+  <div class="props-header reveal">
+    <div>
+      <div class="section-eyebrow">Featured Listings</div>
+      <h2 class="section-title">Premium <em>Land Parcels</em></h2>
+      <div class="gold-rule"></div>
+    </div>
+    <a href="#contact" class="btn-ghost">Enquire About All</a>
+  </div>
+
+  <div class="props-grid">
+
+    <!-- CARD 1: Giddenahalli -->
+    <div class="prop-card reveal reveal-delay-1" id="card0">
+      <div class="prop-3d-scene">
+        <canvas id="prop-canvas-0"></canvas>
+        <div class="prop-badge">Premium JV</div>
+        <div class="prop-3d-label">13</div>
       </div>
-      <a href="#contact" class="btn-outline">Enquire About All</a>
+      <div class="prop-body">
+        <div class="prop-location"><div class="prop-location-dot"></div>Hosur Main Road · Giddenahalli Village</div>
+        <div class="prop-title">13.75 Acres — High-Rise Apartment JV</div>
+        <div class="prop-rule"></div>
+        <div class="prop-specs">
+          <div>
+            <div class="spec-label">Land Area</div>
+            <div class="spec-val gold">13.75 Ac</div>
+          </div>
+          <div>
+            <div class="spec-label">Non-Refundable</div>
+            <div class="spec-val gold">₹90 Cr</div>
+          </div>
+          <div>
+            <div class="spec-label">JV Ratio</div>
+            <div class="spec-val">47% / 53%</div>
+          </div>
+          <div>
+            <div class="spec-label">Launch Price</div>
+            <div class="spec-val">₹15k/sqft</div>
+          </div>
+          <div>
+            <div class="spec-label">Max Floors</div>
+            <div class="spec-val">Up to 50</div>
+          </div>
+          <div>
+            <div class="spec-label">Completion</div>
+            <div class="spec-val">4 Years</div>
+          </div>
+        </div>
+        <div class="prop-tags">
+          <span class="prop-tag">Premium FAR</span>
+          <span class="prop-tag">High-Rise</span>
+          <span class="prop-tag">Villa Option</span>
+          <span class="prop-tag">High Growth</span>
+        </div>
+        <div class="prop-footer">
+          <div>
+            <div class="prop-price-label">Non-Refundable Advance</div>
+            <div class="prop-price-val">₹90 Cr</div>
+          </div>
+          <button class="prop-enquire" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Enquire →</button>
+        </div>
+      </div>
     </div>
 
-    <div class="props-grid">
-
-      <!-- PROPERTY 1: Giddenahalli -->
-      <div class="prop-card reveal">
-        <div class="prop-img bg-hosur">
-          <div class="prop-acres-display">13</div>
-         <div class="prop-icon-large">
-    <img src="images/pro3.jpeg" alt="Property">
-</div>
-          <div class="prop-badge">Premium JV</div>
+    <!-- CARD 2: 6 Acres JD -->
+    <div class="prop-card reveal reveal-delay-2" id="card1">
+      <div class="prop-3d-scene">
+        <canvas id="prop-canvas-1"></canvas>
+        <div class="prop-badge">No Advance</div>
+        <div class="prop-3d-label">6</div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-location"><div class="prop-location-dot"></div>Prime Location · Excellent Potential</div>
+        <div class="prop-title">6 Acres — Apartment Joint Development</div>
+        <div class="prop-rule"></div>
+        <div class="prop-specs">
+          <div>
+            <div class="spec-label">Land Area</div>
+            <div class="spec-val gold">6 Acres</div>
+          </div>
+          <div>
+            <div class="spec-label">Rate</div>
+            <div class="spec-val gold">₹5 Cr/Ac</div>
+          </div>
+          <div>
+            <div class="spec-label">JD Ratio</div>
+            <div class="spec-val">42% / 58%</div>
+          </div>
+          <div>
+            <div class="spec-label">Out Rate</div>
+            <div class="spec-val">10 Acres</div>
+          </div>
+          <div>
+            <div class="spec-label">Goodwill</div>
+            <div class="spec-val gold">₹60 L</div>
+          </div>
+          <div>
+            <div class="spec-label">Advance</div>
+            <div class="spec-val green">None</div>
+          </div>
         </div>
-        <div class="prop-body">
-          <div class="prop-location">📍 Hosur Main Road · Giddenahalli Village</div>
-          <div class="prop-title">13.75 Acres — High-Rise Apartment JV</div>
-          <div class="prop-divider"></div>
-          <div class="prop-specs">
-            <div class="prop-spec-item">
-              <div class="prop-spec-label">Land Area</div>
-              <div class="prop-spec-val gold">13.75 Acres</div>
-            </div>
-            <div class="prop-spec-item">
-              <div class="prop-spec-label">Non-Refundable</div>
-              <div class="prop-spec-val gold">₹90 Crore</div>
-            </div>
-            <div class="prop-spec-item">
-              <div class="prop-spec-label">JV Ratio</div>
-              <div class="prop-spec-val">47% / 53%</div>
-            </div>
-            <div class="prop-spec-item">
-              <div class="prop-spec-label">Launch Price</div>
-              <div class="prop-spec-val">₹15,000/sqft</div>
-            </div>
-            <div class="prop-spec-item">
-              <div class="prop-spec-label">Max Floors</div>
-              <div class="prop-spec-val">Up to 50</div>
-            </div>
-            <div class="prop-spec-item">
-              <div class="prop-spec-label">Completion</div>
-              <div class="prop-spec-val">4 Years</div>
-            </div>
+        <div class="prop-tags">
+          <span class="prop-tag">Clear Title</span>
+          <span class="prop-tag">No Advance</span>
+          <span class="prop-tag">Excellent ROI</span>
+          <span class="prop-tag">Premium JD</span>
+        </div>
+        <div class="prop-footer">
+          <div>
+            <div class="prop-price-label">Goodwill Only</div>
+            <div class="prop-price-val">₹60 Lakhs</div>
           </div>
-          <div class="prop-tags">
-            <span class="prop-tag">Premium FAR Loading</span>
-            <span class="prop-tag">High-Rise</span>
-            <span class="prop-tag">Villa Option</span>
-            <span class="prop-tag">High Growth</span>
-          </div>
-          <div class="prop-cta">
-            <div class="prop-price">
-              <div class="prop-price-label">Non-Refundable Advance</div>
-              <div class="prop-price-val">₹90 Cr</div>
-            </div>
-            <button class="prop-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Enquire →</button>
-          </div>
+          <button class="prop-enquire" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Enquire →</button>
         </div>
       </div>
-
-      <!-- PROPERTY 2: 6 Acres JD -->
-      <div class="prop-card reveal">
-        <div class="prop-img bg-jd">
-          <div class="prop-acres-display">6</div>
-                <div class="prop-icon-large">
-    <img src="images/pro2.jpeg" alt="Property">
-</div>
-          <div class="prop-badge">No Advance</div>
-        </div>
-        <div class="prop-body">
-          <div class="prop-location">📍 Prime Location · Excellent Potential</div>
-          <div class="prop-title">6 Acres — Apartment Joint Development</div>
-          <div class="prop-divider"></div>
-          <div class="prop-specs">
-            <div class="prop-spec-item">
-              <div class="prop-spec-label">Land Area</div>
-              <div class="prop-spec-val gold">6 Acres</div>
-            </div>
-            <div class="prop-spec-item">
-              <div class="prop-spec-label">Rate</div>
-              <div class="prop-spec-val gold">₹5 Cr/Acre</div>
-            </div>
-            <div class="prop-spec-item">
-              <div class="prop-spec-label">JD Ratio</div>
-              <div class="prop-spec-val">42% / 58%</div>
-            </div>
-            <div class="prop-spec-item">
-              <div class="prop-spec-label">Out Rate</div>
-              <div class="prop-spec-val">10 Acres</div>
-            </div>
-            <div class="prop-spec-item">
-              <div class="prop-spec-label">Goodwill</div>
-              <div class="prop-spec-val">₹60 Lakhs</div>
-            </div>
-            <div class="prop-spec-item">
-              <div class="prop-spec-label">Advance</div>
-              <div class="prop-spec-val" style="color:#4ade80">None Required</div>
-            </div>
-          </div>
-          <div class="prop-tags">
-            <span class="prop-tag">Clear Title</span>
-            <span class="prop-tag">No Advance</span>
-            <span class="prop-tag">Excellent ROI</span>
-            <span class="prop-tag">Premium JD</span>
-          </div>
-          <div class="prop-cta">
-            <div class="prop-price">
-              <div class="prop-price-label">Goodwill Only</div>
-              <div class="prop-price-val">₹60 Lakhs</div>
-            </div>
-            <button class="prop-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Enquire →</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- PROPERTY 3: Hebbagodi -->
-      <div class="prop-card reveal">
-        <div class="prop-img bg-hebbagodi">
-          <div class="prop-acres-display">18</div>
-                 <div class="prop-icon-large">
-    <img src="images/pro1.jpeg" alt="Property">
-</div>
-          <div class="prop-badge prop-badge-jv">Yellow Zone</div>
-        </div>
-        <div class="prop-body">
-          <div class="prop-location">📍 Hebbagodi · Near Electronic City</div>
-          <div class="prop-title">18 Acres — JD Apartment & Villa, Yellow Zone</div>
-          <div class="prop-divider"></div>
-          <div class="prop-specs">
-            <div class="prop-spec-item">
-              <div class="prop-spec-label">Land Area</div>
-              <div class="prop-spec-val gold">18 Acres</div>
-            </div>
-            <div class="prop-spec-item">
-              <div class="prop-spec-label">Advance & Goodwill</div>
-              <div class="prop-spec-val gold">₹95 Crore</div>
-            </div>
-            <div class="prop-spec-item">
-              <div class="prop-spec-label">JD Ratio</div>
-              <div class="prop-spec-val">60% / 40%</div>
-            </div>
-            <div class="prop-spec-item">
-              <div class="prop-spec-label">IT Hub Distance</div>
-              <div class="prop-spec-val">10 Minutes</div>
-            </div>
-            <div class="prop-spec-item">
-              <div class="prop-spec-label">Road Access</div>
-              <div class="prop-spec-val">40ft + 40ft</div>
-            </div>
-            <div class="prop-spec-item">
-              <div class="prop-spec-label">Litigation</div>
-              <div class="prop-spec-val" style="color:#4ade80">None</div>
-            </div>
-          </div>
-          <div class="prop-tags">
-            <span class="prop-tag">Yellow Zone</span>
-            <span class="prop-tag">No Litigation</span>
-            <span class="prop-tag">Clear Title</span>
-            <span class="prop-tag">Near E-City</span>
-            <span class="prop-tag">Villa + Apt</span>
-          </div>
-          <div class="prop-cta">
-            <div class="prop-price">
-              <div class="prop-price-label">Advance & Goodwill</div>
-              <div class="prop-price-val">₹95 Cr</div>
-            </div>
-            <button class="prop-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Enquire →</button>
-          </div>
-        </div>
-      </div>
-
     </div>
+
+    <!-- CARD 3: Hebbagodi -->
+    <div class="prop-card reveal reveal-delay-3" id="card2">
+      <div class="prop-3d-scene">
+        <canvas id="prop-canvas-2"></canvas>
+        <div class="prop-badge outline">Yellow Zone</div>
+        <div class="prop-3d-label">18</div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-location"><div class="prop-location-dot"></div>Hebbagodi · Near Electronic City</div>
+        <div class="prop-title">18 Acres — JD Apartment & Villa, Yellow Zone</div>
+        <div class="prop-rule"></div>
+        <div class="prop-specs">
+          <div>
+            <div class="spec-label">Land Area</div>
+            <div class="spec-val gold">18 Acres</div>
+          </div>
+          <div>
+            <div class="spec-label">Advance + GW</div>
+            <div class="spec-val gold">₹95 Cr</div>
+          </div>
+          <div>
+            <div class="spec-label">JD Ratio</div>
+            <div class="spec-val">60% / 40%</div>
+          </div>
+          <div>
+            <div class="spec-label">IT Hub</div>
+            <div class="spec-val">10 min</div>
+          </div>
+          <div>
+            <div class="spec-label">Road Access</div>
+            <div class="spec-val">40ft+40ft</div>
+          </div>
+          <div>
+            <div class="spec-label">Litigation</div>
+            <div class="spec-val green">None</div>
+          </div>
+        </div>
+        <div class="prop-tags">
+          <span class="prop-tag">Yellow Zone</span>
+          <span class="prop-tag">No Litigation</span>
+          <span class="prop-tag">Clear Title</span>
+          <span class="prop-tag">Near E-City</span>
+          <span class="prop-tag">Villa + Apt</span>
+        </div>
+        <div class="prop-footer">
+          <div>
+            <div class="prop-price-label">Advance & Goodwill</div>
+            <div class="prop-price-val">₹95 Cr</div>
+          </div>
+          <button class="prop-enquire" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Enquire →</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
-<style>
-    .prop-icon-large {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 220px;
-}
-
-.prop-icon-large img {
-    max-width: 80%;
-    max-height: 80%;
-    object-fit: contain;
-}
-</style>
 
 <!-- WHY JPS -->
 <section id="why">
-  <div class="reveal">
-    <div class="section-label">Our Edge</div>
-    <h2 class="section-title">Why Developers Choose<br>JPS Group</h2>
-    <div class="divider"></div>
-  </div>
-  <div class="why-grid">
-    <div class="why-card reveal">
-      <div class="why-icon">🔍</div>
-      <div class="why-title">Verified Clear Titles</div>
-      <div class="why-text">Every land parcel we represent undergoes rigorous title verification. Zero litigation. Clean documentation.</div>
+  <div class="why-layout">
+    <div class="reveal">
+      <div class="section-eyebrow">Our Edge</div>
+      <h2 class="section-title">Why Developers<br>Choose <em>JPS Group</em></h2>
+      <div class="gold-rule"></div>
+      <p class="section-desc">
+        We don't just list properties — we curate opportunities. Every parcel is hand-selected for clean documentation, strategic location, and development potential that consistently outperforms the market.
+      </p>
     </div>
-    <div class="why-card reveal">
-      <div class="why-icon">📍</div>
-      <div class="why-title">Strategic Locations</div>
-      <div class="why-text">Only high-growth corridors — Hosur Road, Electronic City, established IT hubs with excellent connectivity.</div>
-    </div>
-    <div class="why-card reveal">
-      <div class="why-icon">🤝</div>
-      <div class="why-title">JV & JD Expertise</div>
-      <div class="why-text">We structure Joint Ventures and Joint Developments with favourable ratios, protecting both builder and owner interests.</div>
-    </div>
-    <div class="why-card reveal">
-      <div class="why-icon">📈</div>
-      <div class="why-title">Maximum ROI Potential</div>
-      <div class="why-text">Premium FAR loading, launch price projections, and market intelligence to maximise your return on every development.</div>
-    </div>
-    <div class="why-card reveal">
-      <div class="why-icon">⚡</div>
-      <div class="why-title">Fast-Track Closures</div>
-      <div class="why-text">Streamlined deal structure, single-owner families, and ready documentation ensure faster closures and project launches.</div>
-    </div>
-    <div class="why-card reveal">
-      <div class="why-icon">🏆</div>
-      <div class="why-title">Premium Pipeline</div>
-      <div class="why-text">Exclusive access to off-market parcels that never reach public listings — properties reserved for serious developers.</div>
+    <div class="why-grid-r">
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-icon">🔍</div>
+        <div class="why-card-title">Verified Clear Titles</div>
+        <div class="why-card-text">Every parcel undergoes rigorous title verification. Zero litigation. Clean documentation, always.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-icon">📍</div>
+        <div class="why-card-title">Strategic Locations</div>
+        <div class="why-card-text">Only high-growth corridors — Hosur Road, Electronic City, established IT hubs.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-icon">🤝</div>
+        <div class="why-card-title">JV & JD Expertise</div>
+        <div class="why-card-text">Structures designed with favourable ratios protecting both builder and owner interests.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-icon">📈</div>
+        <div class="why-card-title">Maximum ROI</div>
+        <div class="why-card-text">Premium FAR loading, launch price projections and market intelligence to maximise returns.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-icon">⚡</div>
+        <div class="why-card-title">Fast-Track Closures</div>
+        <div class="why-card-text">Single-owner families, ready documentation — faster closures and project launches.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-icon">🏆</div>
+        <div class="why-card-title">Premium Pipeline</div>
+        <div class="why-card-text">Exclusive off-market parcels that never reach public listings, reserved for serious developers.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -671,64 +932,64 @@
 <!-- LOCATIONS -->
 <section id="locations">
   <div class="reveal">
-    <div class="section-label">Where We Operate</div>
-    <h2 class="section-title">Prime Bengaluru Corridors</h2>
-    <div class="divider"></div>
-    <p class="section-sub">Our listings are concentrated in Bengaluru's fastest-growing zones, near IT hubs, infrastructure projects, and premium residential catchments.</p>
-    <div class="loc-strip" style="margin-top:2.5rem">
-      <div class="loc-pin"><div class="loc-pin-dot"></div> Hosur Main Road</div>
-      <div class="loc-pin"><div class="loc-pin-dot"></div> Giddenahalli Village</div>
-      <div class="loc-pin"><div class="loc-pin-dot"></div> Hebbagodi</div>
-      <div class="loc-pin"><div class="loc-pin-dot"></div> Near Electronic City</div>
-      <div class="loc-pin"><div class="loc-pin-dot"></div> IT Hub Corridor</div>
+    <div class="section-eyebrow">Where We Operate</div>
+    <h2 class="section-title">Prime Bengaluru <em>Corridors</em></h2>
+    <div class="gold-rule"></div>
+    <p style="color:var(--muted);font-size:0.92rem;line-height:1.8;max-width:520px">
+      Our listings are concentrated in Bengaluru's fastest-growing zones — near IT hubs, infrastructure projects, and premium residential catchments.
+    </p>
+    <div class="loc-grid">
+      <div class="loc-chip"><div class="loc-dot"></div> Hosur Main Road</div>
+      <div class="loc-chip"><div class="loc-dot"></div> Giddenahalli Village</div>
+      <div class="loc-chip"><div class="loc-dot"></div> Hebbagodi</div>
+      <div class="loc-chip"><div class="loc-dot"></div> Near Electronic City</div>
+      <div class="loc-chip"><div class="loc-dot"></div> IT Hub Corridor</div>
     </div>
   </div>
 </section>
 
 <!-- CTA STRIP -->
 <div class="cta-strip reveal">
-  <h2>A Rare Opportunity for<br><span style="color:var(--gold)">Visionary Developers</span></h2>
+  <h2>A Rare Opportunity for<br><em>Visionary Developers</em></h2>
   <p>Limited parcels. Verified titles. Strategic locations. Act before they're gone.</p>
   <div class="cta-btns">
     <a href="#contact" class="btn-primary">Schedule a Site Visit</a>
-    <a href="#properties" class="btn-outline">Browse Properties</a>
+    <a href="#properties" class="btn-ghost">Browse Properties</a>
   </div>
 </div>
 
 <!-- CONTACT -->
 <section id="contact">
-  <div class="contact-grid">
+  <div class="contact-layout">
     <div class="reveal">
-      <div class="section-label">Get in Touch</div>
-      <h2 class="section-title">Let's Discuss<br>Your Investment</h2>
-      <div class="divider"></div>
-      <div class="contact-info">
-        <p>Whether you're a developer seeking a JV partner, an investor evaluating opportunities, or a builder looking for your next project — our team is ready to guide you.</p>
-        <div class="contact-detail">
-          <div class="contact-icon">📞</div>
-          <div>
-            <div class="contact-detail-label">Phone</div>
-            <div class="contact-detail-val">Contact us for details</div>
-          </div>
+      <div class="section-eyebrow">Get in Touch</div>
+      <h2 class="contact-info-title">Let's Discuss<br>Your <em>Investment</em></h2>
+      <div class="gold-rule"></div>
+      <p class="contact-info-desc">Whether you're a developer seeking a JV partner, an investor evaluating opportunities, or a builder looking for your next project — our team is ready to guide you.</p>
+      <div class="contact-detail">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="detail-label">Phone</div>
+          <div class="detail-val">9994782518</div>
         </div>
-        <div class="contact-detail">
-          <div class="contact-icon">📧</div>
-          <div>
-            <div class="contact-detail-label">Email</div>
-            <div class="contact-detail-val">info@jpsgroup.in</div>
-          </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">📧</div>
+        <div>
+          <div class="detail-label">Email</div>
+          <div class="detail-val">jpsestate77@gmail.com</div>
         </div>
-        <div class="contact-detail">
-          <div class="contact-icon">📍</div>
-          <div>
-            <div class="contact-detail-label">Operating Area</div>
-            <div class="contact-detail-val">Bengaluru, Karnataka</div>
-          </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="detail-label">Operating Area</div>
+          <div class="detail-val">Bengaluru, Karnataka & Tamil nadu</div>
         </div>
       </div>
     </div>
-    <div class="contact-form reveal">
-      <h3>Send an Enquiry</h3>
+    <div class="contact-form-wrap reveal reveal-delay-1">
+      <div class="contact-form-title">Send an Enquiry</div>
       <div class="form-row">
         <div class="form-group">
           <label>First Name</label>
@@ -761,15 +1022,43 @@
     </div>
   </div>
 </section>
+<script>
+  
+document.querySelector('.submit-btn').addEventListener('click', function() {
 
+    const inputs = document.querySelectorAll('input');
+    const firstName = inputs[0].value;
+    const lastName = inputs[1].value;
+    const phone = document.querySelector('input[type="tel"]').value;
+    const property = document.querySelector('select').value;
+    const message = document.querySelector('textarea').value;
+
+    const whatsappMessage =
+`🏡 JPS GROUP ENQUIRY
+
+Name: ${firstName} ${lastName}
+Phone: ${phone}
+Interested In: ${property}
+
+Message:
+${message}`;
+
+    window.open(
+        'https://wa.me/919994782518?text=' +
+        encodeURIComponent(whatsappMessage),
+        '_blank'
+    );
+});
+
+</script>
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-brand">
+    <div>
       <div class="footer-brand-name">JPS Group</div>
       <div class="footer-brand-tag">Real Estate Consultants · Bengaluru</div>
     </div>
-    <div style="font-size:0.8rem;color:var(--text-muted);text-align:right">
+    <div style="font-size:0.78rem;color:var(--muted);text-align:right;line-height:1.8">
       Connecting Land, Investments & Opportunities<br>
       <span style="color:var(--gold)">◆</span> Premium. Prime. Perfect.
     </div>
@@ -778,15 +1067,472 @@
 </footer>
 
 <script>
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
+/* ═══════════════════════════════════════════
+   LOADER
+═══════════════════════════════════════════ */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+  }, 1600);
+});
+
+/* ═══════════════════════════════════════════
+   NAV SCROLL
+═══════════════════════════════════════════ */
+window.addEventListener('scroll', () => {
+  document.getElementById('main-nav').classList.toggle('scrolled', scrollY > 60);
+});
+
+/* ═══════════════════════════════════════════
+   REVEAL OBSERVER
+═══════════════════════════════════════════ */
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 70);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+/* ═══════════════════════════════════════════
+   BACKGROUND PARTICLE FIELD (Three.js)
+═══════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('bg-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 1000);
+  camera.position.z = 40;
+
+  // Particle geometry
+  const count = 800;
+  const positions = new Float32Array(count * 3);
+  for (let i = 0; i < count * 3; i++) {
+    positions[i] = (Math.random() - 0.5) * 120;
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const mat = new THREE.PointsMaterial({ color: 0xC9A84C, size: 0.18, transparent: true, opacity: 0.5 });
+  scene.add(new THREE.Points(geo, mat));
+
+  // Lines connecting some particles
+  const linePairs = [];
+  for (let i = 0; i < 60; i++) {
+    const a = Math.floor(Math.random() * count);
+    const b = Math.floor(Math.random() * count);
+    const lGeo = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(positions[a*3], positions[a*3+1], positions[a*3+2]),
+      new THREE.Vector3(positions[b*3], positions[b*3+1], positions[b*3+2])
+    ]);
+    const lMat = new THREE.LineBasicMaterial({ color: 0xC9A84C, transparent: true, opacity: 0.07 });
+    scene.add(new THREE.Line(lGeo, lMat));
+  }
+
+  function resize() {
+    renderer.setSize(innerWidth, innerHeight);
+    camera.aspect = innerWidth / innerHeight;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  let mouseX = 0, mouseY = 0;
+  window.addEventListener('mousemove', e => {
+    mouseX = (e.clientX / innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / innerHeight - 0.5) * 2;
+  });
+
+  const clock = new THREE.Clock();
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+    scene.rotation.y = t * 0.018 + mouseX * 0.06;
+    scene.rotation.x = mouseY * 0.04;
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+
+/* ═══════════════════════════════════════════
+   HERO 3D SCENE — Rotating city skyline
+═══════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  const w = canvas.parentElement.offsetWidth || 500;
+  const h = 450;
+  canvas.width = w; canvas.height = h;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(w, h);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 200);
+  camera.position.set(0, 12, 28);
+  camera.lookAt(0, 4, 0);
+
+  // Lighting
+  const ambient = new THREE.AmbientLight(0x1a2a40, 2.5);
+  scene.add(ambient);
+
+  const goldLight = new THREE.PointLight(0xC9A84C, 3, 40);
+  goldLight.position.set(8, 15, 5);
+  scene.add(goldLight);
+
+  const blueLight = new THREE.PointLight(0x3060ff, 1.5, 35);
+  blueLight.position.set(-10, 8, 10);
+  scene.add(blueLight);
+
+  const sunLight = new THREE.DirectionalLight(0xfff5dd, 1.2);
+  sunLight.position.set(5, 20, 10);
+  sunLight.castShadow = true;
+  sunLight.shadow.mapSize.width = 1024;
+  sunLight.shadow.mapSize.height = 1024;
+  scene.add(sunLight);
+
+  // Ground plane
+  const groundGeo = new THREE.PlaneGeometry(60, 60);
+  const groundMat = new THREE.MeshStandardMaterial({
+    color: 0x08111f, metalness: 0.3, roughness: 0.8
+  });
+  const ground = new THREE.Mesh(groundGeo, groundMat);
+  ground.rotation.x = -Math.PI / 2;
+  ground.receiveShadow = true;
+  scene.add(ground);
+
+  // Grid helper (subtle)
+  const grid = new THREE.GridHelper(40, 20, 0xC9A84C, 0x0d1e30);
+  grid.material.opacity = 0.15; grid.material.transparent = true;
+  scene.add(grid);
+
+  // Building factory
+  function makeBuilding(x, z, w, d, h, floors, color, accent) {
+    const group = new THREE.Group();
+
+    // Main body
+    const bodyGeo = new THREE.BoxGeometry(w, h, d);
+    const bodyMat = new THREE.MeshStandardMaterial({
+      color, metalness: 0.5, roughness: 0.4
+    });
+    const body = new THREE.Mesh(bodyGeo, bodyMat);
+    body.position.y = h / 2;
+    body.castShadow = true;
+    body.receiveShadow = true;
+    group.add(body);
+
+    // Window rows
+    const winRows = Math.floor(h / 1.8);
+    const winCols = Math.floor(w / 0.9);
+    for (let r = 0; r < winRows; r++) {
+      for (let c = 0; c < winCols; c++) {
+        if (Math.random() < 0.6) {
+          const wGeo = new THREE.PlaneGeometry(0.35, 0.5);
+          const wMat = new THREE.MeshStandardMaterial({
+            color: Math.random() < 0.4 ? 0xfff5aa : 0x334466,
+            emissive: Math.random() < 0.4 ? 0xffdd44 : 0x001133,
+            emissiveIntensity: 0.8
+          });
+          const win = new THREE.Mesh(wGeo, wMat);
+          win.position.set(
+            -w/2 + 0.5 + c * 0.9,
+            0.6 + r * 1.8,
+            d/2 + 0.01
+          );
+          group.add(win);
+        }
+      }
+    }
+
+    // Rooftop accent bar
+    const roofGeo = new THREE.BoxGeometry(w + 0.1, 0.15, d + 0.1);
+    const roofMat = new THREE.MeshStandardMaterial({ color: accent, metalness: 0.9, roughness: 0.1, emissive: accent, emissiveIntensity: 0.3 });
+    const roof = new THREE.Mesh(roofGeo, roofMat);
+    roof.position.y = h + 0.075;
+    group.add(roof);
+
+    // Antenna for tall buildings
+    if (h > 10) {
+      const antGeo = new THREE.CylinderGeometry(0.04, 0.04, h * 0.18);
+      const antMat = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, metalness: 1, roughness: 0.2 });
+      const ant = new THREE.Mesh(antGeo, antMat);
+      ant.position.y = h + h * 0.09;
+      group.add(ant);
+
+      const tipGeo = new THREE.SphereGeometry(0.08);
+      const tipMat = new THREE.MeshStandardMaterial({ color: accent, emissive: accent, emissiveIntensity: 1 });
+      const tip = new THREE.Mesh(tipGeo, tipMat);
+      tip.position.y = h + h * 0.18;
+      group.add(tip);
+    }
+
+    group.position.set(x, 0, z);
+    return group;
+  }
+
+  // City layout
+  const buildings = [
+    // Central towers
+    makeBuilding(0, 0, 2.2, 2.2, 18, 18, 0x1a3a5c, 0xC9A84C),
+    makeBuilding(-3.5, 0.5, 1.8, 1.8, 13, 13, 0x162a42, 0xE8C96A),
+    makeBuilding(3.5, -0.5, 2.0, 2.0, 15, 15, 0x0f2035, 0xC9A84C),
+    // Mid-range buildings
+    makeBuilding(-7, 1, 2.0, 1.6, 9, 9, 0x142030, 0x4a90d9),
+    makeBuilding(7, 0, 1.8, 1.8, 11, 11, 0x18283c, 0xC9A84C),
+    makeBuilding(-5, -3, 1.6, 1.6, 7, 7, 0x0f1e2e, 0x6aade8),
+    makeBuilding(5, 3, 1.5, 1.5, 8, 8, 0x16283c, 0xE8C96A),
+    // Short buildings / podiums
+    makeBuilding(-9, -2, 2.5, 2.0, 4, 4, 0x0c1825, 0x4a90d9),
+    makeBuilding(9, -3, 2.2, 1.8, 5, 5, 0x0f1e2e, 0xC9A84C),
+    makeBuilding(0, -5, 3.0, 2.0, 3.5, 3, 0x0c1825, 0x6aade8),
+    makeBuilding(-4, 4, 1.4, 1.4, 6, 6, 0x122030, 0xC9A84C),
+    makeBuilding(4, -4, 1.6, 1.4, 5.5, 5, 0x0e1c2c, 0xE8C96A),
+  ];
+  buildings.forEach(b => scene.add(b));
+
+  // Floating gold rings around tallest building
+  for (let i = 0; i < 3; i++) {
+    const rGeo = new THREE.TorusGeometry(3 + i * 1.5, 0.04, 8, 60);
+    const rMat = new THREE.MeshStandardMaterial({ color: 0xC9A84C, emissive: 0xC9A84C, emissiveIntensity: 0.4, transparent: true, opacity: 0.35 - i * 0.08 });
+    const ring = new THREE.Mesh(rGeo, rMat);
+    ring.rotation.x = Math.PI / 2;
+    ring.position.y = 8 + i * 3;
+    ring.userData.speed = 0.004 + i * 0.002;
+    ring.userData.phaseY = i * 1.2;
+    scene.add(ring);
+  }
+
+  // Fog
+  scene.fog = new THREE.FogExp2(0x060d16, 0.018);
+
+  const clock = new THREE.Clock();
+  let mouseX = 0;
+  window.addEventListener('mousemove', e => {
+    mouseX = (e.clientX / innerWidth - 0.5);
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+
+    // Rotate city slowly
+    scene.rotation.y = t * 0.08 + mouseX * 0.3;
+
+    // Pulse rings
+    scene.children.forEach(obj => {
+      if (obj.geometry && obj.geometry.type === 'TorusGeometry') {
+        obj.rotation.z = t * obj.userData.speed * 20;
+        obj.position.y = 8 + Math.sin(t * 0.5 + obj.userData.phaseY) * 0.5;
+        obj.material.emissiveIntensity = 0.3 + Math.sin(t * 1.2 + obj.userData.phaseY) * 0.2;
       }
     });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => observer.observe(el));
+
+    // Pulse gold light
+    goldLight.intensity = 2.5 + Math.sin(t * 0.8) * 0.8;
+    goldLight.position.x = Math.cos(t * 0.3) * 10;
+    goldLight.position.z = Math.sin(t * 0.3) * 10;
+
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+
+/* ═══════════════════════════════════════════
+   PROPERTY CARD 3D SCENES
+═══════════════════════════════════════════ */
+const propSceneConfigs = [
+  // Card 0: High-rise towers (13.75 Ac)
+  {
+    type: 'highrise',
+    color1: 0x1a3a5c, color2: 0x0f2035,
+    accent: 0xC9A84C, floors: 50
+  },
+  // Card 1: Mid-rise apartments (6 Ac)
+  {
+    type: 'midrise',
+    color1: 0x162a42, color2: 0x0d1e30,
+    accent: 0xE8C96A, floors: 20
+  },
+  // Card 2: Villas + apartments (18 Ac)
+  {
+    type: 'mixed',
+    color1: 0x142a1a, color2: 0x0d1e10,
+    accent: 0xC9A84C, floors: 30
+  }
+];
+
+propSceneConfigs.forEach((cfg, idx) => {
+  const canvas = document.getElementById(`prop-canvas-${idx}`);
+  if (!canvas) return;
+  const container = canvas.parentElement;
+  const W = container.offsetWidth || 380;
+  const H = 220;
+  canvas.width = W; canvas.height = H;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(W, H);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, W / H, 0.1, 100);
+  camera.position.set(0, 8, 18);
+  camera.lookAt(0, 3, 0);
+
+  // Lights
+  scene.add(new THREE.AmbientLight(0x0a1525, 3));
+  const pLight = new THREE.PointLight(cfg.accent, 4, 30);
+  pLight.position.set(5, 12, 5);
+  scene.add(pLight);
+  const pLight2 = new THREE.PointLight(0x204080, 2, 25);
+  pLight2.position.set(-6, 5, 8);
+  scene.add(pLight2);
+
+  // Ground
+  const gGeo = new THREE.PlaneGeometry(40, 40);
+  const gMat = new THREE.MeshStandardMaterial({ color: 0x07101a, metalness: 0.2, roughness: 0.9 });
+  const gnd = new THREE.Mesh(gGeo, gMat);
+  gnd.rotation.x = -Math.PI / 2;
+  scene.add(gnd);
+
+  const grid2 = new THREE.GridHelper(30, 15, cfg.accent, 0x0d1e30);
+  grid2.material.opacity = 0.12; grid2.material.transparent = true;
+  scene.add(grid2);
+
+  function box(x, y, z, w, h, d, color, emissive, ei = 0) {
+    const geo = new THREE.BoxGeometry(w, h, d);
+    const mat = new THREE.MeshStandardMaterial({ color, metalness: 0.5, roughness: 0.45, emissive: emissive || 0x000000, emissiveIntensity: ei });
+    const m = new THREE.Mesh(geo, mat);
+    m.position.set(x, y + h / 2, z);
+    scene.add(m);
+    return m;
+  }
+
+  if (cfg.type === 'highrise') {
+    // Central supertall
+    box(0, 0, 0, 1.8, 16, 1.8, cfg.color1);
+    box(0, 0, 0, 2.0, 0.2, 2.0, cfg.accent, cfg.accent, 0.4);
+    box(0, 16, 0, 2.0, 0.2, 2.0, cfg.accent, cfg.accent, 0.6);
+    // Flanking towers
+    box(-3.5, 0, 0, 1.4, 11, 1.4, cfg.color2);
+    box(3.5, 0, 0, 1.4, 11, 1.4, cfg.color2);
+    // Lower blocks
+    box(-2, 0, 2.5, 1.2, 7, 1.2, 0x0f1e2e);
+    box(2, 0, 2.5, 1.2, 7, 1.2, 0x0f1e2e);
+    box(0, 0, -2.5, 2.5, 5, 1.2, 0x0c1825);
+    // Window dots (glowing planes)
+    for (let i = 0; i < 30; i++) {
+      const wGeo = new THREE.PlaneGeometry(0.25, 0.35);
+      const wMat = new THREE.MeshStandardMaterial({ color: 0xfff5aa, emissive: 0xffee44, emissiveIntensity: 0.9, transparent: true, opacity: 0.85 });
+      const w2 = new THREE.Mesh(wGeo, wMat);
+      w2.position.set(-0.7 + (i % 3) * 0.7, 0.5 + Math.floor(i / 3) * 0.9, 0.91);
+      scene.add(w2);
+    }
+  } else if (cfg.type === 'midrise') {
+    // Wide mid-rise apartment blocks
+    box(-3, 0, 0, 4, 8, 2, cfg.color1);
+    box(3, 0, 0, 4, 8, 2, cfg.color1);
+    box(0, 0, 1.5, 5, 6, 2.5, cfg.color2);
+    box(-3, 0, 3, 3, 5, 1.5, 0x0f1e2e);
+    box(3, 0, 3, 3, 5, 1.5, 0x0f1e2e);
+    // Rooftop trim
+    [-3, 3].forEach(x => { box(x, 8, 0, 4.1, 0.15, 2.1, cfg.accent, cfg.accent, 0.5); });
+    box(0, 6, 1.5, 5.1, 0.15, 2.6, cfg.accent, cfg.accent, 0.4);
+    // Windows
+    for (let bx of [-3, 0, 3]) {
+      for (let row = 0; row < 5; row++) {
+        for (let col = 0; col < 4; col++) {
+          if (Math.random() > 0.35) {
+            const wGeo = new THREE.PlaneGeometry(0.3, 0.4);
+            const wMat = new THREE.MeshStandardMaterial({ emissive: Math.random() > 0.4 ? 0xffd080 : 0x203050, emissiveIntensity: 1, color: 0x000000 });
+            const win = new THREE.Mesh(wGeo, wMat);
+            win.position.set(bx - 0.6 + col * 0.42, 0.7 + row * 0.95, bx === 0 ? 2.76 : 1.01);
+            scene.add(win);
+          }
+        }
+      }
+    }
+  } else {
+    // Mixed: villas + apartment tower
+    // Tower
+    box(3, 0, 0, 2.2, 12, 2.2, cfg.color1);
+    box(3, 12, 0, 2.3, 0.18, 2.3, cfg.accent, cfg.accent, 0.5);
+    // Villa row
+    [-3, -1.2, 0.6].forEach((vx, vi) => {
+      box(vx, 0, 2.5, 1.8, 3, 2.2, 0x1a3020);
+      // pitched roof (pyramid approx using cone)
+      const roofGeo = new THREE.ConeGeometry(1.5, 1, 4);
+      const roofMat = new THREE.MeshStandardMaterial({ color: 0x2a5030, metalness: 0.2, roughness: 0.7 });
+      const roof = new THREE.Mesh(roofGeo, roofMat);
+      roof.rotation.y = Math.PI / 4;
+      roof.position.set(vx, 3.5, 2.5);
+      scene.add(roof);
+    });
+    // Mid blocks
+    box(-1, 0, -1, 1.5, 7, 1.5, cfg.color2);
+    box(0.5, 0, -2, 2.0, 5, 1.5, 0x0f1e15);
+    // Greenery dots (spheres)
+    for (let i = 0; i < 8; i++) {
+      const sGeo = new THREE.SphereGeometry(0.3 + Math.random() * 0.2, 6, 6);
+      const sMat = new THREE.MeshStandardMaterial({ color: 0x1a4020, roughness: 0.9 });
+      const sphere = new THREE.Mesh(sGeo, sMat);
+      sphere.position.set(-5 + i * 1.3, 0.3, -3 + Math.random() * 2);
+      scene.add(sphere);
+    }
+  }
+
+  // Orbit ring
+  const rGeo = new THREE.TorusGeometry(4 + idx, 0.035, 6, 50);
+  const rMat = new THREE.MeshStandardMaterial({ color: cfg.accent, emissive: cfg.accent, emissiveIntensity: 0.5, transparent: true, opacity: 0.3 });
+  const ring = new THREE.Mesh(rGeo, rMat);
+  ring.rotation.x = Math.PI / 2;
+  ring.position.y = 0.1;
+  scene.add(ring);
+
+  scene.fog = new THREE.FogExp2(0x060d16, 0.03);
+
+  const clock = new THREE.Clock();
+  // Mouse tilt for this card
+  const cardEl = document.getElementById(`card${idx}`);
+  let mx = 0, my = 0;
+  if (cardEl) {
+    cardEl.addEventListener('mousemove', e => {
+      const r = cardEl.getBoundingClientRect();
+      mx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      my = ((e.clientY - r.top) / r.height - 0.5) * 2;
+    });
+    cardEl.addEventListener('mouseleave', () => { mx = 0; my = 0; });
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+    scene.rotation.y += ((-mx * 0.4 + t * 0.12) - scene.rotation.y) * 0.05;
+    ring.rotation.z = t * 0.3;
+    ring.material.emissiveIntensity = 0.35 + Math.sin(t * 1.5) * 0.2;
+    pLight.intensity = 3.5 + Math.sin(t * 0.9) * 0.8;
+    renderer.render(scene, camera);
+  }
+  animate();
+});
+
+/* ═══════════════════════════════════════════
+   3D CARD TILT ON HOVER
+═══════════════════════════════════════════ */
+document.querySelectorAll('.prop-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transform = `perspective(900px) rotateY(${x * 10}deg) rotateX(${-y * 8}deg) translateZ(8px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg) translateZ(0)';
+  });
+});
 </script>
 </body>
 </html>
