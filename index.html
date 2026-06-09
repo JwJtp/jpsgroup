@@ -1110,40 +1110,85 @@ footer {
              class="leadership-banner">
    
   <a href="bro/bro.pdf" download class="brochure-btn">
-    📄 Download Company Brochure
+    📄 Click to Download Company Brochure Here
 </a>
 </section>
 <style>
-  .brochure-btn{
-    display:inline-block;
-    padding:5px 35px;
-    background:linear-gradient(135deg,#FFD700,#F4B400);
-    color:#111;
-    text-decoration:none;
-    font-weight:700;
-    border-radius:50px;
-    transition:0.3s ease;
-    box-shadow:0 10px 25px rgba(255,215,0,0.35);
+.leadership-showcase{
+    padding:60px 20px;
+    background:#071426;
+    text-align:center;
 }
-.download-btn{
+
+.leadership-banner{
+    width:100%;
+    max-width:1200px;
     display:block;
-    width:fit-content;
-    margin:30px auto 0;
-    padding:15px 35px;
-    background:#FFD700;
+    margin:0 auto;
+    border-radius:20px;
+
+    box-shadow:
+    0 0 30px rgba(255,204,0,.25),
+    0 15px 40px rgba(0,0,0,.3);
+}
+
+.brochure-btn{
+    display:inline-block;
+    margin-top:25px;
+    padding:14px 30px;
+
+    background:linear-gradient(
+        135deg,
+        #FFD700,
+        #F4B400
+    );
+
     color:#111;
     text-decoration:none;
-    border-radius:50px;
     font-weight:700;
+    border-radius:50px;
+
+    transition:.3s ease;
+    box-shadow:
+    0 10px 25px rgba(255,215,0,.35);
 }
-.brochure-btn{
-    display:flex;
-    justify-content:center;
-    margin-top:30px;
-}
+
 .brochure-btn:hover{
     transform:translateY(-4px);
-    box-shadow:0 15px 35px rgba(255,215,0,0.5);
+    box-shadow:
+    0 15px 35px rgba(255,215,0,.5);
+}
+
+/* Tablet */
+
+@media (max-width:768px){
+
+    .leadership-showcase{
+        padding:40px 15px;
+    }
+
+    .brochure-btn{
+        padding:12px 24px;
+        font-size:14px;
+    }
+}
+
+/* Mobile */
+
+@media (max-width:480px){
+
+    .leadership-banner{
+        border-radius:12px;
+    }
+
+    .brochure-btn{
+        width:90%;
+        max-width:320px;
+        display:block;
+        margin:20px auto 0;
+        text-align:center;
+        font-size:14px;
+    }
 }
 </style>
 <!-- CONTACT -->
