@@ -1193,108 +1193,217 @@ footer {
 </style>
 
 <!-- STEP-->
-<section class="media-recognition">
+<!-- MEDIA RECOGNITION SECTION -->
+<!-- LUXURY MEDIA RECOGNITION SECTION -->
 
-    <div class="recognition-container">
+<section class="luxury-media">
 
-        <div class="recognition-left">
-            <span class="tag">PRESS RECOGNITION</span>
+    <div class="luxury-heading">
+        <span>MEDIA RECOGNITION</span>
 
-            <h2>
-                Official Media
-                <span>Recognition</span>
-            </h2>
+        <h2>
+            Official Media
+            Recognition
+        </h2>
 
-            <p>
-                Proudly recognized as a verified member
-                under the All India Media Association.
-            </p>
+        <p>
+            Proudly recognized as a verified member under the
+            All India Media Association. Committed to excellence,
+            transparency, and trusted media representation.
+        </p>
+    </div>
 
-          
-        </div>
+    <div class="luxury-frame">
 
-        <div class="recognition-right">
-
-            <div class="id-wrapper">
-                <img src="images/step.jpeg"
-                     alt="Media ID Card">
-            </div>
-
-        </div>
+        <img src="images/step.jpeg"
+             alt="Official Media ID"
+             class="luxury-id">
 
     </div>
 
+  
+
 </section>
+
 <style>
-.media-recognition{
-    background:#f8f6f1;
-    padding:120px 8%;
+
+/* ==========================
+   LUXURY MEDIA SECTION
+========================== */
+
+.luxury-media{
+    padding:120px 20px;
+    text-align:center;
+    background:#0b0b0b;
+    position:relative;
+    overflow:hidden;
 }
 
-.recognition-container{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:80px;
+.luxury-heading span{
+    color:#c9a227;
+    letter-spacing:5px;
+    font-size:14px;
+    font-weight:600;
 }
 
-.tag{
-    display:inline-block;
-    padding:8px 18px;
-    background:#111;
-    color:#d4af37;
-    letter-spacing:3px;
-    border-radius:30px;
-    font-size:12px;
+.luxury-heading h2{
+    color:#fff;
+    font-size:52px;
+    margin:15px 0;
+    font-weight:700;
+    line-height:1.2;
 }
 
-.recognition-left h2{
-    font-size:60px;
-    margin:20px 0;
-    line-height:1.1;
-    color:#111;
-}
-
-.recognition-left h2 span{
-    color:#d4af37;
-}
-
-.recognition-left p{
-    color:#666;
-    max-width:500px;
+.luxury-heading p{
+    color:#bbb;
     font-size:18px;
+    max-width:700px;
+    margin:auto;
     line-height:1.8;
 }
 
-.recognition-btn{
-    display:inline-block;
-    margin-top:30px;
-    padding:15px 35px;
-    background:#111;
-    color:white;
-    text-decoration:none;
-    border-radius:40px;
-    transition:.3s;
+.luxury-frame{
+    margin:60px auto;
+    width:420px;
+    max-width:90%;
+    padding:15px;
+    border:3px solid #c9a227;
+    border-radius:25px;
+    background:linear-gradient(
+        135deg,
+        #c9a227,
+        #f8e08c,
+        #c9a227
+    );
+    box-shadow:
+        0 0 30px rgba(201,162,39,.4),
+        0 0 80px rgba(201,162,39,.25);
+    position:relative;
+    transition:.4s;
 }
 
-.recognition-btn:hover{
+.luxury-frame:hover{
+    transform:translateY(-8px);
+}
+
+.luxury-id{
+    width:100%;
+    display:block;
+    border-radius:15px;
+    transition:.4s;
+}
+
+.luxury-frame:hover .luxury-id{
+    transform:scale(1.03);
+}
+
+.luxury-btn{
+    display:inline-block;
+    padding:18px 45px;
+    color:#000;
+    background:linear-gradient(
+        135deg,
+        #f8e08c,
+        #c9a227
+    );
+    text-decoration:none;
+    font-weight:700;
+    border-radius:50px;
+    letter-spacing:1px;
+    transition:.4s;
+    box-shadow:0 10px 30px rgba(201,162,39,.25);
+}
+
+.luxury-btn:hover{
     transform:translateY(-5px);
 }
 
-.id-wrapper{
-    position:relative;
-    padding:15px;
-    background:white;
-    border-radius:25px;
-    box-shadow:
-    0 20px 50px rgba(0,0,0,.15);
+/* ==========================
+   TABLET
+========================== */
+
+@media (max-width:992px){
+
+    .luxury-media{
+        padding:90px 20px;
+    }
+
+    .luxury-heading h2{
+        font-size:42px;
+    }
+
+    .luxury-heading p{
+        font-size:16px;
+    }
+
+    .luxury-frame{
+        width:380px;
+    }
+
 }
 
-.id-wrapper img{
-    width:380px;
-    display:block;
-    border-radius:15px;
+/* ==========================
+   MOBILE
+========================== */
+
+@media (max-width:768px){
+
+    .luxury-media{
+        padding:70px 15px;
+    }
+
+    .luxury-heading span{
+        font-size:12px;
+        letter-spacing:3px;
+    }
+
+    .luxury-heading h2{
+        font-size:32px;
+    }
+
+    .luxury-heading p{
+        font-size:15px;
+        line-height:1.7;
+    }
+
+    .luxury-frame{
+        width:100%;
+        max-width:320px;
+        padding:10px;
+    }
+
+    .luxury-btn{
+        padding:14px 28px;
+        font-size:14px;
+    }
+
 }
+
+/* ==========================
+   SMALL MOBILE
+========================== */
+
+@media (max-width:480px){
+
+    .luxury-heading h2{
+        font-size:26px;
+    }
+
+    .luxury-heading p{
+        font-size:14px;
+    }
+
+    .luxury-frame{
+        max-width:280px;
+    }
+
+    .luxury-btn{
+        width:100%;
+        max-width:260px;
+    }
+
+}
+
 </style>
 <!-- CONTACT -->
 <section id="contact">
